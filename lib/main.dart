@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'agendamento_screen.dart';
+import 'cadastro_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,9 +33,10 @@ class _LoginScreenState extends State<LoginScreen> {
   final _passwordController = TextEditingController();
 
   void _login() {
-    // Implementar lógica de login aqui
-    print('Email: ${_emailController.text}');
-    print('Senha: ${_passwordController.text}');
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const AgendamentoScreen()),
+    );
   }
 
   @override
@@ -41,11 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Colors.lightBlue, Colors.blue],
-          ),
+          color: Color(0xFF334155),
         ),
         child: Padding(
           padding: const EdgeInsets.all(24.0),
@@ -94,6 +93,19 @@ class _LoginScreenState extends State<LoginScreen> {
               child: ElevatedButton(
                 onPressed: _login,
                 child: const Text('Entrar'),
+              ),
+            ),
+            const SizedBox(height: 16),
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const CadastroScreen()),
+                );
+              },
+              child: const Text(
+                'Não tem conta? Cadastre-se',
+                style: TextStyle(color: Colors.white),
               ),
             ),
             ],
