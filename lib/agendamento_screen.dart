@@ -32,24 +32,33 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Agendar Coleta'),
-        backgroundColor: Colors.blue,
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/images/fundo.jpg'),
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
         foregroundColor: Colors.white,
       ),
       body: Container(
         decoration: const BoxDecoration(
           color: Color(0xFF334155),
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Container(
+        child: Center(
+          child: Padding(
             padding: const EdgeInsets.all(24.0),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
+            child: Container(
+              padding: const EdgeInsets.all(24.0),
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.9),
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
                   TextField(
                     controller: _infoController,
                     decoration: const InputDecoration(
@@ -126,7 +135,8 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
                       child: const Text('Agendar Coleta'),
                     ),
                   ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

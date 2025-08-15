@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'agendamento_screen.dart';
+import 'tela_inicial.dart';
 
 class CadastroScreen extends StatefulWidget {
   const CadastroScreen({super.key});
@@ -18,7 +18,7 @@ class _CadastroScreenState extends State<CadastroScreen> {
   void _cadastrar() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const AgendamentoScreen()),
+      MaterialPageRoute(builder: (context) => const TelaInicial()),
     );
   }
 
@@ -27,26 +27,32 @@ class _CadastroScreenState extends State<CadastroScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Cadastro'),
-        backgroundColor: Colors.blue,
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/images/fundo.jpg'),
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
         foregroundColor: Colors.white,
       ),
       body: Container(
         decoration: const BoxDecoration(
           color: Color(0xFF334155),
         ),
-        child: SafeArea(
+        child: Center(
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(24.0),
             child: Container(
-              width: double.infinity,
-              height: double.infinity,
               padding: const EdgeInsets.all(24.0),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Colors.white.withOpacity(0.9),
                 borderRadius: BorderRadius.circular(16),
               ),
               child: SingleChildScrollView(
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                   TextField(
                     controller: _nomeController,

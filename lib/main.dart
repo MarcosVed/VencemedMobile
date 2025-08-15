@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'agendamento_screen.dart';
+import 'tela_inicial.dart';
 import 'cadastro_screen.dart';
 
 void main() {
@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'VenceMed',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
       ),
@@ -35,7 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void _login() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const AgendamentoScreen()),
+      MaterialPageRoute(builder: (context) => const TelaInicial()),
     );
   }
 
@@ -44,29 +45,29 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
-          color: Color(0xFF334155),
+          image: DecorationImage(
+            image: AssetImage('assets/images/fundo.jpg'),
+            fit: BoxFit.cover,
+          ),
         ),
         child: Padding(
           padding: const EdgeInsets.all(24.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text(
-                'VenceMed',
-                style: TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
+              Image.asset(
+                'assets/images/logo.jpg',
+                height: 150,
               ),
             const SizedBox(height: 48),
             Container(
               padding: const EdgeInsets.all(24.0),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Colors.white.withOpacity(0.9),
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   TextField(
                     controller: _emailController,
