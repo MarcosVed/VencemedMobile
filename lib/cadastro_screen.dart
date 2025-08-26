@@ -25,86 +25,155 @@ class _CadastroScreenState extends State<CadastroScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Cadastro'),
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/images/fundo.jpg'),
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
-        foregroundColor: Colors.white,
-      ),
       body: Container(
         decoration: const BoxDecoration(
-          color: Color(0xFF334155),
+          image: DecorationImage(
+            image: AssetImage('assets/images/fundo.jpg'),
+            fit: BoxFit.cover,
+          ),
         ),
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: Container(
+        child: Stack(
+          children: [
+            Padding(
               padding: const EdgeInsets.all(24.0),
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.9),
-                borderRadius: BorderRadius.circular(16),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+              Image.asset(
+                'assets/images/f.png',
+                height: 200,
               ),
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
+              const SizedBox(height: 24),
+              const Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Criar conta',
+                  style: TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 32),
                   TextField(
                     controller: _nomeController,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: 'Nome',
-                      border: OutlineInputBorder(),
+                      labelStyle: const TextStyle(color: Colors.white),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25),
+                        borderSide: const BorderSide(color: Colors.white),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25),
+                        borderSide: const BorderSide(color: Colors.white),
+                      ),
+                      filled: true,
+                      fillColor: Colors.white.withOpacity(0.2),
                     ),
+                    style: const TextStyle(color: Colors.white),
                   ),
                   const SizedBox(height: 16),
                   TextField(
                     controller: _emailController,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: 'Email',
-                      border: OutlineInputBorder(),
+                      labelStyle: const TextStyle(color: Colors.white),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25),
+                        borderSide: const BorderSide(color: Colors.white),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25),
+                        borderSide: const BorderSide(color: Colors.white),
+                      ),
+                      filled: true,
+                      fillColor: Colors.white.withOpacity(0.2),
                     ),
+                    style: const TextStyle(color: Colors.white),
                   ),
                   const SizedBox(height: 16),
                   TextField(
                     controller: _senhaController,
                     obscureText: true,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: 'Senha',
-                      border: OutlineInputBorder(),
+                      labelStyle: const TextStyle(color: Colors.white),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25),
+                        borderSide: const BorderSide(color: Colors.white),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25),
+                        borderSide: const BorderSide(color: Colors.white),
+                      ),
+                      filled: true,
+                      fillColor: Colors.white.withOpacity(0.2),
                     ),
+                    style: const TextStyle(color: Colors.white),
                   ),
                   const SizedBox(height: 16),
                   DropdownButtonFormField<String>(
                     value: _nivelAcesso,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: 'Nível de Acesso',
-                      border: OutlineInputBorder(),
+                      labelStyle: const TextStyle(color: Colors.white),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25),
+                        borderSide: const BorderSide(color: Colors.white),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25),
+                        borderSide: const BorderSide(color: Colors.white),
+                      ),
+                      filled: true,
+                      fillColor: Colors.white.withOpacity(0.2),
                     ),
+                    dropdownColor: const Color(0xFF334155),
+                    style: const TextStyle(color: Colors.white),
                     items: const [
-                      DropdownMenuItem(value: 'USER', child: Text('Usuário')),
-                      DropdownMenuItem(value: 'FARMACIA', child: Text('Farmácia')),
-                      DropdownMenuItem(value: 'ADMIN', child: Text('Administrador')),
+                      DropdownMenuItem(value: 'USER', child: Text('Usuário', style: TextStyle(color: Colors.white))),
+                      DropdownMenuItem(value: 'FARMACIA', child: Text('Farmácia', style: TextStyle(color: Colors.white))),
+                      DropdownMenuItem(value: 'ADMIN', child: Text('Administrador', style: TextStyle(color: Colors.white))),
                     ],
                     onChanged: (value) => setState(() => _nivelAcesso = value!),
                   ),
                   const SizedBox(height: 24),
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: _cadastrar,
-                      child: const Text('Cadastrar'),
-                    ),
+                  ElevatedButton(
+                    onPressed: _cadastrar,
+                    child: const Text('Cadastrar'),
                   ),
-                  ],
+                ],
+              ),
+            ),
+            Positioned(
+              top: 50,
+              left: 24,
+              child: IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: const Icon(
+                  Icons.arrow_back,
+                  color: Colors.white,
+                  size: 30,
                 ),
               ),
             ),
-          ),
+          ],
         ),
       ),
     );

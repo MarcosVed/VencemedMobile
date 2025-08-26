@@ -56,45 +56,76 @@ class _LoginScreenState extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                'assets/images/logo.jpg',
-                height: 150,
+                'assets/images/f.png',
+                height: 200,
               ),
-            const SizedBox(height: 48),
-            Container(
-              padding: const EdgeInsets.all(24.0),
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.9),
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  TextField(
-                    controller: _emailController,
-                    decoration: const InputDecoration(
-                      labelText: 'Email',
-                      border: OutlineInputBorder(),
-                    ),
+              const SizedBox(height: 24),
+              const Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Bem vindo de volta',
+                  style: TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
                   ),
-                  const SizedBox(height: 16),
-                  TextField(
-                    controller: _passwordController,
-                    obscureText: true,
-                    decoration: const InputDecoration(
-                      labelText: 'Senha',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                ],
+                ),
               ),
+              const SizedBox(height: 32),
+              const SizedBox(height: 48),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                  controller: _emailController,
+                  decoration: InputDecoration(
+                    labelText: 'Email',
+                    labelStyle: const TextStyle(color: Colors.white),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25),
+                      borderSide: const BorderSide(color: Colors.white),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25),
+                      borderSide: const BorderSide(color: Colors.white),
+                    ),
+                    filled: true,
+                    fillColor: Colors.white.withOpacity(0.2),
+                  ),
+                  style: const TextStyle(color: Colors.white),
+                ),
+                const SizedBox(height: 16),
+                TextField(
+                  controller: _passwordController,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    labelText: 'Senha',
+                    labelStyle: const TextStyle(color: Colors.white),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25),
+                      borderSide: const BorderSide(color: Colors.white),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25),
+                      borderSide: const BorderSide(color: Colors.white),
+                    ),
+                    filled: true,
+                    fillColor: Colors.white.withOpacity(0.2),
+                  ),
+                  style: const TextStyle(color: Colors.white),
+                ),
+              ],
             ),
             const SizedBox(height: 24),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: _login,
-                child: const Text('Entrar'),
-              ),
+            ElevatedButton(
+              onPressed: _login,
+              child: const Text('Entrar'),
             ),
             const SizedBox(height: 16),
             TextButton(

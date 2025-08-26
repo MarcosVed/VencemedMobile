@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'agendamento_screen.dart';
+import 'perfil_screen.dart';
 
 class TelaInicial extends StatelessWidget {
   const TelaInicial({super.key});
@@ -18,6 +19,17 @@ class TelaInicial extends StatelessWidget {
           ),
         ),
         foregroundColor: Colors.white,
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+          onPressed: () {
+            showDialog(
+              context: context,
+              barrierColor: Colors.transparent,
+              builder: (context) => const PerfilScreen(),
+            );
+          },
+          icon: const Icon(Icons.person),
+        ),
       ),
       body: Container(
         decoration: const BoxDecoration(

@@ -59,82 +59,82 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                  TextField(
-                    controller: _infoController,
-                    decoration: const InputDecoration(
-                      labelText: 'Informações',
-                      border: OutlineInputBorder(),
+                    TextField(
+                      controller: _infoController,
+                      decoration: const InputDecoration(
+                        labelText: 'Informações',
+                        border: OutlineInputBorder(),
+                      ),
+                      maxLines: 3,
                     ),
-                    maxLines: 3,
-                  ),
-                  const SizedBox(height: 16),
-                  TextField(
-                    controller: _cepController,
-                    decoration: const InputDecoration(
-                      labelText: 'CEP',
-                      border: OutlineInputBorder(),
+                    const SizedBox(height: 16),
+                    TextField(
+                      controller: _cepController,
+                      decoration: const InputDecoration(
+                        labelText: 'CEP',
+                        border: OutlineInputBorder(),
+                      ),
+                      maxLength: 8,
                     ),
-                    maxLength: 8,
-                  ),
-                  const SizedBox(height: 16),
-                  TextField(
-                    controller: _numeroController,
-                    decoration: const InputDecoration(
-                      labelText: 'Número',
-                      border: OutlineInputBorder(),
+                    const SizedBox(height: 16),
+                    TextField(
+                      controller: _numeroController,
+                      decoration: const InputDecoration(
+                        labelText: 'Número',
+                        border: OutlineInputBorder(),
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 16),
-                  TextField(
-                    controller: _complementoController,
-                    decoration: const InputDecoration(
-                      labelText: 'Complemento',
-                      border: OutlineInputBorder(),
+                    const SizedBox(height: 16),
+                    TextField(
+                      controller: _complementoController,
+                      decoration: const InputDecoration(
+                        labelText: 'Complemento',
+                        border: OutlineInputBorder(),
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 16),
-                  TextField(
-                    controller: _telefoneController,
-                    decoration: const InputDecoration(
-                      labelText: 'Telefone',
-                      border: OutlineInputBorder(),
+                    const SizedBox(height: 16),
+                    TextField(
+                      controller: _telefoneController,
+                      decoration: const InputDecoration(
+                        labelText: 'Telefone',
+                        border: OutlineInputBorder(),
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 16),
-                  DropdownButtonFormField<String>(
-                    value: _tipoMedicamento,
-                    decoration: const InputDecoration(
-                      labelText: 'Tipo de Medicamento',
-                      border: OutlineInputBorder(),
+                    const SizedBox(height: 16),
+                    DropdownButtonFormField<String>(
+                      value: _tipoMedicamento,
+                      decoration: const InputDecoration(
+                        labelText: 'Tipo de Medicamento',
+                        border: OutlineInputBorder(),
+                      ),
+                      items: const [
+                        DropdownMenuItem(value: 'COMPRIMIDO', child: Text('Comprimido')),
+                        DropdownMenuItem(value: 'SERINGA', child: Text('Seringa')),
+                        DropdownMenuItem(value: 'VARIOS', child: Text('Vários')),
+                      ],
+                      onChanged: (value) => setState(() => _tipoMedicamento = value!),
                     ),
-                    items: const [
-                      DropdownMenuItem(value: 'COMPRIMIDO', child: Text('Comprimido')),
-                      DropdownMenuItem(value: 'SERINGA', child: Text('Seringa')),
-                      DropdownMenuItem(value: 'VARIOS', child: Text('Vários')),
-                    ],
-                    onChanged: (value) => setState(() => _tipoMedicamento = value!),
-                  ),
-                  const SizedBox(height: 16),
-                  DropdownButtonFormField<String>(
-                    value: _tipoColeta,
-                    decoration: const InputDecoration(
-                      labelText: 'Tipo de Coleta',
-                      border: OutlineInputBorder(),
+                    const SizedBox(height: 16),
+                    DropdownButtonFormField<String>(
+                      value: _tipoColeta,
+                      decoration: const InputDecoration(
+                        labelText: 'Tipo de Coleta',
+                        border: OutlineInputBorder(),
+                      ),
+                      items: const [
+                        DropdownMenuItem(value: 'RETIRADA', child: Text('Retirada')),
+                        DropdownMenuItem(value: 'ENTREGA', child: Text('Entrega')),
+                      ],
+                      onChanged: (value) => setState(() => _tipoColeta = value!),
                     ),
-                    items: const [
-                      DropdownMenuItem(value: 'RETIRADA', child: Text('Retirada')),
-                      DropdownMenuItem(value: 'ENTREGA', child: Text('Entrega')),
-                    ],
-                    onChanged: (value) => setState(() => _tipoColeta = value!),
-                  ),
-                  const SizedBox(height: 24),
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: _agendar,
-                      child: const Text('Agendar Coleta'),
+                    const SizedBox(height: 24),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: _agendar,
+                        child: const Text('Agendar Coleta'),
+                      ),
                     ),
-                  ),
                   ],
                 ),
               ),
