@@ -12,8 +12,7 @@ class _CadastroScreenState extends State<CadastroScreen> {
   final _nomeController = TextEditingController();
   final _emailController = TextEditingController();
   final _senhaController = TextEditingController();
-  
-  String _nivelAcesso = 'USER';
+  bool _obscurePassword = true;
 
   void _cadastrar() {
     Navigator.push(
@@ -102,10 +101,17 @@ class _CadastroScreenState extends State<CadastroScreen> {
                   const SizedBox(height: 16),
                   TextField(
                     controller: _senhaController,
-                    obscureText: true,
+                    obscureText: _obscurePassword,
                     decoration: InputDecoration(
                       labelText: 'Senha',
                       labelStyle: const TextStyle(color: Colors.white),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _obscurePassword ? Icons.visibility : Icons.visibility_off,
+                          color: Colors.white,
+                        ),
+                        onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+                      ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(25),
                       ),
@@ -121,35 +127,6 @@ class _CadastroScreenState extends State<CadastroScreen> {
                       fillColor: Colors.white.withOpacity(0.2),
                     ),
                     style: const TextStyle(color: Colors.white),
-                  ),
-                  const SizedBox(height: 16),
-                  DropdownButtonFormField<String>(
-                    value: _nivelAcesso,
-                    decoration: InputDecoration(
-                      labelText: 'Nível de Acesso',
-                      labelStyle: const TextStyle(color: Colors.white),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(25),
-                        borderSide: const BorderSide(color: Colors.white),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(25),
-                        borderSide: const BorderSide(color: Colors.white),
-                      ),
-                      filled: true,
-                      fillColor: Colors.white.withOpacity(0.2),
-                    ),
-                    dropdownColor: const Color(0xFF334155),
-                    style: const TextStyle(color: Colors.white),
-                    items: const [
-                      DropdownMenuItem(value: 'USER', child: Text('Usuário', style: TextStyle(color: Colors.white))),
-                      DropdownMenuItem(value: 'FARMACIA', child: Text('Farmácia', style: TextStyle(color: Colors.white))),
-                      DropdownMenuItem(value: 'ADMIN', child: Text('Administrador', style: TextStyle(color: Colors.white))),
-                    ],
-                    onChanged: (value) => setState(() => _nivelAcesso = value!),
                   ),
                   const SizedBox(height: 24),
                   ElevatedButton(
