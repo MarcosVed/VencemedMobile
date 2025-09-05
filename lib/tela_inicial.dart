@@ -2,55 +2,34 @@ import 'package:flutter/material.dart';
 import 'agendamento_screen.dart';
 import 'perfil_screen.dart';
 import 'models/coleta.dart';
+import 'services/coleta_service.dart';
 
-class TelaInicial extends StatelessWidget {
+class ArchClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    Path path = Path();
+    path.lineTo(0, size.height - 30);
+    path.quadraticBezierTo(size.width / 2, size.height + 30, size.width, size.height - 30);
+    path.lineTo(size.width, 0);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+}
+
+class TelaInicial extends StatefulWidget {
   const TelaInicial({super.key});
 
+  @override
+  State<TelaInicial> createState() => _TelaInicialState();
+}
+
+class _TelaInicialState extends State<TelaInicial> {
+
   List<Coleta> _getColetas() {
-    return [
-      Coleta(
-        id: 1,
-        info: 'Medicamentos vencidos',
-        cep: '12345678',
-        numero: '123',
-        complemento: 'Apto 45',
-        telefone: '11999999999',
-        tipoMedicamento: 'COMPRIMIDO',
-        tipoColeta: 'RETIRADA',
-        dataColeta: DateTime.now().add(const Duration(days: 2)),
-        usuarioId: 1,
-        estabelecimentoId: 1,
-        statusColeta: 'ATIVO',
-      ),
-      Coleta(
-        id: 2,
-        info: 'Seringas usadas',
-        cep: '87654321',
-        numero: '456',
-        complemento: 'Casa',
-        telefone: '11888888888',
-        tipoMedicamento: 'SERINGA',
-        tipoColeta: 'ENTREGA',
-        dataColeta: DateTime.now().subtract(const Duration(days: 1)),
-        usuarioId: 1,
-        estabelecimentoId: 2,
-        statusColeta: 'COLETADO',
-      ),
-      Coleta(
-        id: 3,
-        info: 'Medicamentos diversos',
-        cep: '11223344',
-        numero: '789',
-        complemento: 'Bloco B',
-        telefone: '11777777777',
-        tipoMedicamento: 'VARIOS',
-        tipoColeta: 'RETIRADA',
-        dataColeta: DateTime.now().subtract(const Duration(days: 5)),
-        usuarioId: 1,
-        estabelecimentoId: 1,
-        statusColeta: 'INATIVO',
-      ),
-    ];
+    return ColetaService().getColetas();
   }
 
   Widget _buildColetasList() {
@@ -184,43 +163,62 @@ class TelaInicial extends StatelessWidget {
         decoration: const BoxDecoration(
           color: Color(0xFF334155),
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              const SizedBox(height: 20),
-              Image.asset(
-                'assets/images/logo.jpg',
-                height: 100,
-              ),
-              const SizedBox(height: 20),
-              SizedBox(
+        child: Column(
+          children: [
+            ClipPath(
+              clipper: ArchClipper(),
+              child: Container(
                 width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const AgendamentoScreen()),
-                    );
-                  },
-                  child: const Text('Agendar Coleta'),
+                height: 200,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/images/image.png'),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
-              const SizedBox(height: 30),
-              const Text(
-                'Suas Coletas',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+                    Image.asset(
+                      'assets/images/logo.jpg',
+                      height: 80,
+                    ),
+                    const SizedBox(height: 20),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const AgendamentoScreen()),
+                          );
+                          setState(() {});
+                        },
+                        child: const Text('Agendar Coleta'),
+                      ),
+                    ),
+                    const SizedBox(height: 30),
+                    const Text(
+                      'Suas Coletas',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Expanded(
+                      child: _buildColetasList(),
+                    ),
+                  ],
                 ),
               ),
-              const SizedBox(height: 16),
-              Expanded(
-                child: _buildColetasList(),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

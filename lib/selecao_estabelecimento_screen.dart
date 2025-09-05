@@ -1,0 +1,98 @@
+import 'package:flutter/material.dart';
+import 'models/estabelecimento.dart';
+
+class SelecaoEstabelecimentoScreen extends StatelessWidget {
+  const SelecaoEstabelecimentoScreen({super.key});
+
+  List<Estabelecimento> _getEstabelecimentos() {
+    return [
+      Estabelecimento(
+        id: 1,
+        nome: 'Drogasil',
+        endereco: 'Rua das Flores, 123 - Centro',
+        telefone: '(11) 3333-4444',
+        tipo: 'FARMACIA',
+      ),
+      Estabelecimento(
+        id: 2,
+        nome: 'Drogaria Miro',
+        endereco: 'Av. Principal, 456 - Vila Nova',
+        telefone: '(11) 5555-6666',
+        tipo: 'FARMACIA',
+      ),
+      Estabelecimento(
+        id: 3,
+        nome: 'Farmácia Popular',
+        endereco: 'Rua do Comércio, 789 - Jardim',
+        telefone: '(11) 7777-8888',
+        tipo: 'FARMACIA',
+      ),
+      Estabelecimento(
+        id: 4,
+        nome: 'Centro de Descarte Municipal',
+        endereco: 'Av. Ambiental, 321 - Industrial',
+        telefone: '(11) 9999-0000',
+        tipo: 'ESTABELECIMENTO',
+      ),
+    ];
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final estabelecimentos = _getEstabelecimentos();
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Escolher Local de Descarte'),
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/images/fundo.jpg'),
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+        foregroundColor: Colors.white,
+      ),
+      body: Container(
+        decoration: const BoxDecoration(
+          color: Color(0xFF334155),
+        ),
+        child: ListView.builder(
+          padding: const EdgeInsets.all(16),
+          itemCount: estabelecimentos.length,
+          itemBuilder: (context, index) {
+            final estabelecimento = estabelecimentos[index];
+            return Card(
+              margin: const EdgeInsets.only(bottom: 12),
+              child: ListTile(
+                leading: Icon(
+                  estabelecimento.tipo == 'FARMACIA' 
+                    ? Icons.local_pharmacy 
+                    : Icons.business,
+                  color: Colors.green,
+                  size: 32,
+                ),
+                title: Text(
+                  estabelecimento.nome,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(estabelecimento.endereco),
+                    Text(estabelecimento.telefone),
+                  ],
+                ),
+                trailing: const Icon(Icons.arrow_forward_ios),
+                onTap: () {
+                  Navigator.pop(context, estabelecimento);
+                },
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+}

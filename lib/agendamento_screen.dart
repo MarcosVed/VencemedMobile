@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'selecao_estabelecimento_screen.dart';
+import 'models/estabelecimento.dart';
+import 'models/coleta.dart';
+import 'services/coleta_service.dart';
 
 class AgendamentoScreen extends StatefulWidget {
   const AgendamentoScreen({super.key});
@@ -16,15 +20,38 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
   
   String _tipoMedicamento = 'COMPRIMIDO';
   String _tipoColeta = 'RETIRADA';
+  Estabelecimento? _estabelecimentoSelecionado;
 
   void _agendar() {
-    print('Info: ${_infoController.text}');
-    print('CEP: ${_cepController.text}');
-    print('Número: ${_numeroController.text}');
-    print('Complemento: ${_complementoController.text}');
-    print('Telefone: ${_telefoneController.text}');
-    print('Tipo Medicamento: $_tipoMedicamento');
-    print('Tipo Coleta: $_tipoColeta');
+    if (_estabelecimentoSelecionado == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Selecione um local de descarte')),
+      );
+      return;
+    }
+    
+    final coleta = Coleta(
+      id: ColetaService().getNextId(),
+      info: _infoController.text,
+      cep: _cepController.text,
+      numero: _numeroController.text,
+      complemento: _complementoController.text,
+      telefone: _telefoneController.text,
+      tipoMedicamento: _tipoMedicamento,
+      tipoColeta: _tipoColeta,
+      dataColeta: DateTime.now().add(const Duration(days: 1)),
+      usuarioId: 1,
+      estabelecimentoId: _estabelecimentoSelecionado!.id,
+      statusColeta: 'ATIVO',
+    );
+    
+    ColetaService().adicionarColeta(coleta);
+    
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Coleta agendada com sucesso!')),
+    );
+    
+    Navigator.pop(context);
   }
 
   @override
@@ -126,6 +153,43 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
                         DropdownMenuItem(value: 'ENTREGA', child: Text('Entrega')),
                       ],
                       onChanged: (value) => setState(() => _tipoColeta = value!),
+                    ),
+                    const SizedBox(height: 16),
+                    GestureDetector(
+                      onTap: () async {
+                        final estabelecimento = await Navigator.push<Estabelecimento>(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SelecaoEstabelecimentoScreen(),
+                          ),
+                        );
+                        if (estabelecimento != null) {
+                          setState(() => _estabelecimentoSelecionado = estabelecimento);
+                        }
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                _estabelecimentoSelecionado?.nome ?? 'Selecionar Local de Descarte',
+                                style: TextStyle(
+                                  color: _estabelecimentoSelecionado != null 
+                                    ? Colors.black 
+                                    : Colors.grey[600],
+                                ),
+                              ),
+                            ),
+                            const Icon(Icons.arrow_forward_ios, color: Colors.grey),
+                          ],
+                        ),
+                      ),
                     ),
                     const SizedBox(height: 24),
                     SizedBox(
