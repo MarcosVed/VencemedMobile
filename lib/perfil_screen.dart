@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'main.dart';
+import 'mensagens_screen.dart';
+import 'configuracoes_screen.dart';
 
 class PerfilScreen extends StatelessWidget {
   const PerfilScreen({super.key});
@@ -13,7 +15,7 @@ class PerfilScreen extends StatelessWidget {
         child: Align(
           alignment: Alignment.centerLeft,
           child: Container(
-            width: MediaQuery.of(context).size.width * 0.75,
+            width: MediaQuery.of(context).size.width * 0.5,
             height: double.infinity,
             decoration: const BoxDecoration(
               color: Color(0xFF334155),
@@ -36,7 +38,10 @@ class PerfilScreen extends StatelessWidget {
                 const SizedBox(height: 40),
                 InkWell(
                   onTap: () {
-                    // Implementar configurações
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const ConfiguracoesScreen()),
+                    );
                   },
                   child: const Padding(
                     padding: EdgeInsets.all(16.0),
@@ -46,6 +51,27 @@ class PerfilScreen extends StatelessWidget {
                         SizedBox(width: 16),
                         Text(
                           'Configurações',
+                          style: TextStyle(color: Colors.white, fontSize: 16),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const MensagensScreen()),
+                    );
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Row(
+                      children: [
+                        Icon(Icons.message, color: Colors.white),
+                        SizedBox(width: 16),
+                        Text(
+                          'Mensagens',
                           style: TextStyle(color: Colors.white, fontSize: 16),
                         ),
                       ],

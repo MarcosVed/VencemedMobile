@@ -4,6 +4,8 @@ class Estabelecimento {
   final String endereco;
   final String telefone;
   final String tipo;
+  final String descricao;
+  final String? foto;
 
   Estabelecimento({
     required this.id,
@@ -11,5 +13,7 @@ class Estabelecimento {
     required this.endereco,
     required this.telefone,
     required this.tipo,
+    required this.descricao,
+    this.foto,
   });
 }

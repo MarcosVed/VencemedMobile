@@ -183,11 +183,6 @@ class _TelaInicialState extends State<TelaInicial> {
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   children: [
-                    Image.asset(
-                      'assets/images/logo.jpg',
-                      height: 80,
-                    ),
-                    const SizedBox(height: 20),
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(

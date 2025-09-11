@@ -1,0 +1,153 @@
+import 'package:flutter/material.dart';
+
+class ConfiguracoesScreen extends StatefulWidget {
+  const ConfiguracoesScreen({super.key});
+
+  @override
+  State<ConfiguracoesScreen> createState() => _ConfiguracoesScreenState();
+}
+
+class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> {
+  final _nomeController = TextEditingController(text: 'João Silva');
+  String _email = 'joao@email.com';
+  String _senha = '••••••••';
+  String _foto = 'assets/images/logo.jpg';
+
+  void _alterarFoto() {
+    // Futuramente será implementado
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Funcionalidade de alterar foto será implementada')),
+    );
+  }
+
+  void _salvarAlteracoes() {
+    // Futuramente será implementado
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Alterações salvas com sucesso!')),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Configurações'),
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/images/fundo.jpg'),
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+        foregroundColor: Colors.white,
+      ),
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          color: Color(0xFF334155),
+        ),
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Container(
+              width: double.infinity,
+              constraints: BoxConstraints(
+                minHeight: MediaQuery.of(context).size.height - 200,
+              ),
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const Text(
+                      'Meu Perfil',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 30),
+                    Stack(
+                      children: [
+                        CircleAvatar(
+                          radius: 60,
+                          backgroundImage: AssetImage(_foto),
+                        ),
+                        Positioned(
+                          bottom: 0,
+                          right: 0,
+                          child: GestureDetector(
+                            onTap: _alterarFoto,
+                            child: Container(
+                              padding: const EdgeInsets.all(8),
+                              decoration: const BoxDecoration(
+                                color: Colors.blue,
+                                shape: BoxShape.circle,
+                              ),
+                              child: const Icon(
+                                Icons.camera_alt,
+                                color: Colors.white,
+                                size: 20,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 30),
+                    TextField(
+                      controller: _nomeController,
+                      decoration: const InputDecoration(
+                        labelText: 'Nome',
+                        border: OutlineInputBorder(),
+                        prefixIcon: Icon(Icons.person),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    TextField(
+                      enabled: false,
+                      decoration: InputDecoration(
+                        labelText: 'Email',
+                        border: const OutlineInputBorder(),
+                        prefixIcon: const Icon(Icons.email),
+                        hintText: _email,
+                        filled: true,
+                        fillColor: Colors.grey[100],
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    TextField(
+                      enabled: false,
+                      decoration: InputDecoration(
+                        labelText: 'Senha',
+                        border: const OutlineInputBorder(),
+                        prefixIcon: const Icon(Icons.lock),
+                        hintText: _senha,
+                        filled: true,
+                        fillColor: Colors.grey[100],
+                      ),
+                    ),
+                    const SizedBox(height: 30),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: _salvarAlteracoes,
+                        child: const Text('Salvar Alterações'),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

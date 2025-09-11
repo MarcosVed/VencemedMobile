@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'models/estabelecimento.dart';
+import 'detalhes_estabelecimento_screen.dart';
 
 class SelecaoEstabelecimentoScreen extends StatelessWidget {
   const SelecaoEstabelecimentoScreen({super.key});
@@ -12,6 +13,8 @@ class SelecaoEstabelecimentoScreen extends StatelessWidget {
         endereco: 'Rua das Flores, 123 - Centro',
         telefone: '(11) 3333-4444',
         tipo: 'FARMACIA',
+        descricao: 'Farmácia com amplo horário de funcionamento. Especializada em descarte seguro de medicamentos vencidos e seringas.',
+        foto: 'assets/images/logo.jpg',
       ),
       Estabelecimento(
         id: 2,
@@ -19,6 +22,8 @@ class SelecaoEstabelecimentoScreen extends StatelessWidget {
         endereco: 'Av. Principal, 456 - Vila Nova',
         telefone: '(11) 5555-6666',
         tipo: 'FARMACIA',
+        descricao: 'Drogaria familiar com atendimento personalizado. Aceita todos os tipos de medicamentos para descarte responsável.',
+        foto: 'assets/images/f.png',
       ),
       Estabelecimento(
         id: 3,
@@ -26,6 +31,7 @@ class SelecaoEstabelecimentoScreen extends StatelessWidget {
         endereco: 'Rua do Comércio, 789 - Jardim',
         telefone: '(11) 7777-8888',
         tipo: 'FARMACIA',
+        descricao: 'Farmácia popular com preços acessíveis. Programa de descarte gratuito de medicamentos para a comunidade.',
       ),
       Estabelecimento(
         id: 4,
@@ -33,6 +39,7 @@ class SelecaoEstabelecimentoScreen extends StatelessWidget {
         endereco: 'Av. Ambiental, 321 - Industrial',
         telefone: '(11) 9999-0000',
         tipo: 'ESTABELECIMENTO',
+        descricao: 'Centro oficial da prefeitura para descarte de medicamentos. Funcionamento de segunda a sexta, das 8h às 17h.',
       ),
     ];
   }
@@ -84,7 +91,28 @@ class SelecaoEstabelecimentoScreen extends StatelessWidget {
                     Text(estabelecimento.telefone),
                   ],
                 ),
-                trailing: const Icon(Icons.arrow_forward_ios),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.info_outline),
+                      onPressed: () async {
+                        final result = await Navigator.push<Estabelecimento>(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DetalhesEstabelecimentoScreen(
+                              estabelecimento: estabelecimento,
+                            ),
+                          ),
+                        );
+                        if (result != null) {
+                          Navigator.pop(context, result);
+                        }
+                      },
+                    ),
+                    const Icon(Icons.arrow_forward_ios),
+                  ],
+                ),
                 onTap: () {
                   Navigator.pop(context, estabelecimento);
                 },
