@@ -28,7 +28,7 @@ class DetalhesEstabelecimentoScreen extends StatelessWidget {
         width: double.infinity,
         height: double.infinity,
         decoration: const BoxDecoration(
-          color: Color(0xFF334155),
+          color: Color.fromRGBO(58, 110, 183, 1),
         ),
         child: SafeArea(
           child: SingleChildScrollView(
@@ -39,7 +39,7 @@ class DetalhesEstabelecimentoScreen extends StatelessWidget {
                 minHeight: MediaQuery.of(context).size.height - 200,
               ),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Colors.transparent,
                 borderRadius: BorderRadius.circular(16),
               ),
               padding: const EdgeInsets.all(20),
@@ -75,6 +75,7 @@ class DetalhesEstabelecimentoScreen extends StatelessWidget {
                           style: const TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
+                            color: Colors.white,
                           ),
                         ),
                       ),
@@ -86,12 +87,13 @@ class DetalhesEstabelecimentoScreen extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
+                      color: Colors.white,
                     ),
                   ),
                   const SizedBox(height: 8),
                   Text(
                     estabelecimento.descricao,
-                    style: const TextStyle(fontSize: 16),
+                    style: const TextStyle(fontSize: 16, color: Colors.white),
                   ),
                   const SizedBox(height: 16),
                   const Text(
@@ -99,24 +101,25 @@ class DetalhesEstabelecimentoScreen extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
+                      color: Colors.white,
                     ),
                   ),
                   const SizedBox(height: 8),
                   Row(
                     children: [
-                      const Icon(Icons.location_on, color: Colors.grey),
+                      const Icon(Icons.location_on, color: Colors.white),
                       const SizedBox(width: 8),
                       Expanded(
-                        child: Text(estabelecimento.endereco),
+                        child: Text(estabelecimento.endereco, style: const TextStyle(color: Colors.white)),
                       ),
                     ],
                   ),
                   const SizedBox(height: 8),
                   Row(
                     children: [
-                      const Icon(Icons.phone, color: Colors.grey),
+                      const Icon(Icons.phone, color: Colors.white),
                       const SizedBox(width: 8),
-                      Text(estabelecimento.telefone),
+                      Text(estabelecimento.telefone, style: const TextStyle(color: Colors.white)),
                     ],
                   ),
                   const SizedBox(height: 24),

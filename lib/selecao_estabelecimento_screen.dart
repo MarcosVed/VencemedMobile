@@ -63,7 +63,7 @@ class SelecaoEstabelecimentoScreen extends StatelessWidget {
       ),
       body: Container(
         decoration: const BoxDecoration(
-          color: Color(0xFF334155),
+          color: Color.fromRGBO(58, 110, 183, 1),
         ),
         child: ListView.builder(
           padding: const EdgeInsets.all(16),
@@ -72,6 +72,7 @@ class SelecaoEstabelecimentoScreen extends StatelessWidget {
             final estabelecimento = estabelecimentos[index];
             return Card(
               margin: const EdgeInsets.only(bottom: 12),
+              color: Colors.transparent,
               child: ListTile(
                 leading: Icon(
                   estabelecimento.tipo == 'FARMACIA' 
@@ -82,13 +83,13 @@ class SelecaoEstabelecimentoScreen extends StatelessWidget {
                 ),
                 title: Text(
                   estabelecimento.nome,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
                 ),
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(estabelecimento.endereco),
-                    Text(estabelecimento.telefone),
+                    Text(estabelecimento.endereco, style: const TextStyle(color: Colors.white)),
+                    Text(estabelecimento.telefone, style: const TextStyle(color: Colors.white)),
                   ],
                 ),
                 trailing: Row(

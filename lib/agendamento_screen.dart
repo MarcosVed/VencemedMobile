@@ -71,7 +71,7 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
       ),
       body: Container(
         decoration: const BoxDecoration(
-          color: Color(0xFF334155),
+          color: Color.fromRGBO(58, 110, 183, 1),
         ),
         child: Center(
           child: Padding(
@@ -79,7 +79,7 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
             child: Container(
               padding: const EdgeInsets.all(24.0),
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.9),
+                color: Colors.transparent,
                 borderRadius: BorderRadius.circular(16),
               ),
               child: SingleChildScrollView(
@@ -90,8 +90,20 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
                       controller: _infoController,
                       decoration: const InputDecoration(
                         labelText: 'Informações',
-                        border: OutlineInputBorder(),
+                        labelStyle: TextStyle(color: Colors.white),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
                       ),
+                      style: const TextStyle(color: Colors.white),
                       maxLines: 3,
                     ),
                     const SizedBox(height: 16),
@@ -99,8 +111,20 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
                       controller: _cepController,
                       decoration: const InputDecoration(
                         labelText: 'CEP',
-                        border: OutlineInputBorder(),
+                        labelStyle: TextStyle(color: Colors.white),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
                       ),
+                      style: const TextStyle(color: Colors.white),
                       maxLength: 8,
                     ),
                     const SizedBox(height: 16),
@@ -108,36 +132,85 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
                       controller: _numeroController,
                       decoration: const InputDecoration(
                         labelText: 'Número',
-                        border: OutlineInputBorder(),
+                        labelStyle: TextStyle(color: Colors.white),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
                       ),
+                      style: const TextStyle(color: Colors.white),
                     ),
                     const SizedBox(height: 16),
                     TextField(
                       controller: _complementoController,
                       decoration: const InputDecoration(
                         labelText: 'Complemento',
-                        border: OutlineInputBorder(),
+                        labelStyle: TextStyle(color: Colors.white),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
                       ),
+                      style: const TextStyle(color: Colors.white),
                     ),
                     const SizedBox(height: 16),
                     TextField(
                       controller: _telefoneController,
                       decoration: const InputDecoration(
                         labelText: 'Telefone',
-                        border: OutlineInputBorder(),
+                        labelStyle: TextStyle(color: Colors.white),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
                       ),
+                      style: const TextStyle(color: Colors.white),
                     ),
                     const SizedBox(height: 16),
                     DropdownButtonFormField<String>(
                       value: _tipoMedicamento,
                       decoration: const InputDecoration(
                         labelText: 'Tipo de Medicamento',
-                        border: OutlineInputBorder(),
+                        labelStyle: TextStyle(color: Colors.white),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
                       ),
+                      style: const TextStyle(color: Colors.white),
+                      dropdownColor: const Color.fromRGBO(58, 110, 183, 1),
                       items: const [
-                        DropdownMenuItem(value: 'COMPRIMIDO', child: Text('Comprimido')),
-                        DropdownMenuItem(value: 'SERINGA', child: Text('Seringa')),
-                        DropdownMenuItem(value: 'VARIOS', child: Text('Vários')),
+                        DropdownMenuItem(value: 'COMPRIMIDO', child: Text('Comprimido', style: TextStyle(color: Colors.white))),
+                        DropdownMenuItem(value: 'SERINGA', child: Text('Seringa', style: TextStyle(color: Colors.white))),
+                        DropdownMenuItem(value: 'VARIOS', child: Text('Vários', style: TextStyle(color: Colors.white))),
                       ],
                       onChanged: (value) => setState(() => _tipoMedicamento = value!),
                     ),
@@ -146,11 +219,24 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
                       value: _tipoColeta,
                       decoration: const InputDecoration(
                         labelText: 'Tipo de Coleta',
-                        border: OutlineInputBorder(),
+                        labelStyle: TextStyle(color: Colors.white),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
                       ),
+                      style: const TextStyle(color: Colors.white),
+                      dropdownColor: const Color.fromRGBO(58, 110, 183, 1),
                       items: const [
-                        DropdownMenuItem(value: 'RETIRADA', child: Text('Retirada')),
-                        DropdownMenuItem(value: 'ENTREGA', child: Text('Entrega')),
+                        DropdownMenuItem(value: 'RETIRADA', child: Text('Retirada', style: TextStyle(color: Colors.white))),
+                        DropdownMenuItem(value: 'ENTREGA', child: Text('Entrega', style: TextStyle(color: Colors.white))),
                       ],
                       onChanged: (value) => setState(() => _tipoColeta = value!),
                     ),
@@ -170,8 +256,8 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
                       child: Container(
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(4),
+                          border: Border.all(color: Colors.white),
+                          borderRadius: BorderRadius.circular(25),
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -179,14 +265,12 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
                             Expanded(
                               child: Text(
                                 _estabelecimentoSelecionado?.nome ?? 'Selecionar Local de Descarte',
-                                style: TextStyle(
-                                  color: _estabelecimentoSelecionado != null 
-                                    ? Colors.black 
-                                    : Colors.grey[600],
+                                style: const TextStyle(
+                                  color: Colors.white,
                                 ),
                               ),
                             ),
-                            const Icon(Icons.arrow_forward_ios, color: Colors.grey),
+                            const Icon(Icons.arrow_forward_ios, color: Colors.white),
                           ],
                         ),
                       ),

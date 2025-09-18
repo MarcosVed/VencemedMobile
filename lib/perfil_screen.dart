@@ -18,7 +18,7 @@ class PerfilScreen extends StatelessWidget {
             width: MediaQuery.of(context).size.width * 0.5,
             height: double.infinity,
             decoration: const BoxDecoration(
-              color: Color(0xFF334155),
+              color: Color.fromRGBO(58, 110, 183, 1),
               borderRadius: BorderRadius.only(
                 topRight: Radius.circular(16),
                 bottomRight: Radius.circular(16),

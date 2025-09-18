@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'models/mensagem.dart';
+
 
 class MensagensScreen extends StatefulWidget {
   const MensagensScreen({super.key});
@@ -45,7 +45,7 @@ class _MensagensScreenState extends State<MensagensScreen> {
         width: double.infinity,
         height: double.infinity,
         decoration: const BoxDecoration(
-          color: Color(0xFF334155),
+          color: Color.fromRGBO(58, 110, 183, 1),
         ),
         child: SafeArea(
           child: Padding(
@@ -57,7 +57,7 @@ class _MensagensScreenState extends State<MensagensScreen> {
               ),
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Colors.transparent,
                 borderRadius: BorderRadius.circular(16),
               ),
               child: SingleChildScrollView(
@@ -69,6 +69,7 @@ class _MensagensScreenState extends State<MensagensScreen> {
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
+                        color: Colors.white,
                       ),
                     ),
                     const SizedBox(height: 20),
@@ -76,16 +77,40 @@ class _MensagensScreenState extends State<MensagensScreen> {
                       controller: _emissorController,
                       decoration: const InputDecoration(
                         labelText: 'Nome do Emissor',
-                        border: OutlineInputBorder(),
+                        labelStyle: TextStyle(color: Colors.white),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
                       ),
+                      style: const TextStyle(color: Colors.white),
                     ),
                     const SizedBox(height: 16),
                     TextField(
                       controller: _emailController,
                       decoration: const InputDecoration(
                         labelText: 'Email',
-                        border: OutlineInputBorder(),
+                        labelStyle: TextStyle(color: Colors.white),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
                       ),
+                      style: const TextStyle(color: Colors.white),
                       keyboardType: TextInputType.emailAddress,
                     ),
                     const SizedBox(height: 16),
@@ -93,8 +118,20 @@ class _MensagensScreenState extends State<MensagensScreen> {
                       controller: _telefoneController,
                       decoration: const InputDecoration(
                         labelText: 'Telefone (Opcional)',
-                        border: OutlineInputBorder(),
+                        labelStyle: TextStyle(color: Colors.white),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
                       ),
+                      style: const TextStyle(color: Colors.white),
                       keyboardType: TextInputType.phone,
                     ),
                     const SizedBox(height: 16),
@@ -102,8 +139,20 @@ class _MensagensScreenState extends State<MensagensScreen> {
                       controller: _textoController,
                       decoration: const InputDecoration(
                         labelText: 'Mensagem',
-                        border: OutlineInputBorder(),
+                        labelStyle: TextStyle(color: Colors.white),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
                       ),
+                      style: const TextStyle(color: Colors.white),
                       maxLines: 5,
                       maxLength: 400,
                     ),

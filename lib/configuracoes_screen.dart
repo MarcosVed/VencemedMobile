@@ -46,7 +46,7 @@ class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> {
         width: double.infinity,
         height: double.infinity,
         decoration: const BoxDecoration(
-          color: Color(0xFF334155),
+          color: Color.fromRGBO(58, 110, 183, 1),
         ),
         child: SafeArea(
           child: Padding(
@@ -58,7 +58,7 @@ class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> {
               ),
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Colors.transparent,
                 borderRadius: BorderRadius.circular(16),
               ),
               child: SingleChildScrollView(
@@ -70,6 +70,7 @@ class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> {
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
+                        color: Colors.white,
                       ),
                     ),
                     const SizedBox(height: 30),
@@ -105,20 +106,40 @@ class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> {
                       controller: _nomeController,
                       decoration: const InputDecoration(
                         labelText: 'Nome',
-                        border: OutlineInputBorder(),
-                        prefixIcon: Icon(Icons.person),
+                        labelStyle: TextStyle(color: Colors.white),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        prefixIcon: Icon(Icons.person, color: Colors.white),
                       ),
+                      style: const TextStyle(color: Colors.white),
                     ),
                     const SizedBox(height: 16),
                     TextField(
                       enabled: false,
                       decoration: InputDecoration(
                         labelText: 'Email',
-                        border: const OutlineInputBorder(),
-                        prefixIcon: const Icon(Icons.email),
+                        labelStyle: const TextStyle(color: Colors.white),
+                        border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                        ),
+                        enabledBorder: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        prefixIcon: const Icon(Icons.email, color: Colors.white),
                         hintText: _email,
+                        hintStyle: const TextStyle(color: Colors.white),
                         filled: true,
-                        fillColor: Colors.grey[100],
+                        fillColor: Colors.transparent,
                       ),
                     ),
                     const SizedBox(height: 16),
@@ -126,11 +147,19 @@ class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> {
                       enabled: false,
                       decoration: InputDecoration(
                         labelText: 'Senha',
-                        border: const OutlineInputBorder(),
-                        prefixIcon: const Icon(Icons.lock),
+                        labelStyle: const TextStyle(color: Colors.white),
+                        border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                        ),
+                        enabledBorder: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        prefixIcon: const Icon(Icons.lock, color: Colors.white),
                         hintText: _senha,
+                        hintStyle: const TextStyle(color: Colors.white),
                         filled: true,
-                        fillColor: Colors.grey[100],
+                        fillColor: Colors.transparent,
                       ),
                     ),
                     const SizedBox(height: 30),

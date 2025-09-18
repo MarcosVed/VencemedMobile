@@ -77,6 +77,7 @@ class _TelaInicialState extends State<TelaInicial> {
 
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
+      color: Colors.transparent,
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -91,6 +92,7 @@ class _TelaInicialState extends State<TelaInicial> {
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
+                      color: Colors.white,
                     ),
                   ),
                 ),
@@ -121,11 +123,11 @@ class _TelaInicialState extends State<TelaInicial> {
             const SizedBox(height: 8),
             Text(
               'Tipo: ${coleta.tipoMedicamento} - ${coleta.tipoColeta}',
-              style: const TextStyle(color: Colors.grey),
+              style: const TextStyle(color: Colors.white),
             ),
             Text(
               'Data: ${coleta.dataColeta.day}/${coleta.dataColeta.month}/${coleta.dataColeta.year}',
-              style: const TextStyle(color: Colors.grey),
+              style: const TextStyle(color: Colors.white),
             ),
           ],
         ),
@@ -161,7 +163,7 @@ class _TelaInicialState extends State<TelaInicial> {
       ),
       body: Container(
         decoration: const BoxDecoration(
-          color: Color(0xFF334155),
+          color: Color.fromRGBO(58, 110, 183, 1),
         ),
         child: Column(
           children: [
