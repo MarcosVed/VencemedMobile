@@ -96,7 +96,7 @@ class SelecaoEstabelecimentoScreen extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     IconButton(
-                      icon: const Icon(Icons.info_outline),
+                      icon: const Icon(Icons.info_outline, color: Colors.white),
                       onPressed: () async {
                         final result = await Navigator.push<Estabelecimento>(
                           context,
@@ -111,7 +111,7 @@ class SelecaoEstabelecimentoScreen extends StatelessWidget {
                         }
                       },
                     ),
-                    const Icon(Icons.arrow_forward_ios),
+                    const Icon(Icons.arrow_forward_ios, color: Colors.white),
                   ],
                 ),
                 onTap: () {

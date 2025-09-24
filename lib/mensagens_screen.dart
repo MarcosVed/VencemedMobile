@@ -75,40 +75,44 @@ class _MensagensScreenState extends State<MensagensScreen> {
                     const SizedBox(height: 20),
                     TextField(
                       controller: _emissorController,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         labelText: 'Nome do Emissor',
-                        labelStyle: TextStyle(color: Colors.white),
+                        labelStyle: const TextStyle(color: Colors.white),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                          borderRadius: BorderRadius.circular(25),
                         ),
                         enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25)),
-                          borderSide: BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(25),
+                          borderSide: const BorderSide(color: Colors.white),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25)),
-                          borderSide: BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(25),
+                          borderSide: const BorderSide(color: Colors.white),
                         ),
+                        filled: true,
+                        fillColor: Colors.white.withOpacity(0.2),
                       ),
                       style: const TextStyle(color: Colors.white),
                     ),
                     const SizedBox(height: 16),
                     TextField(
                       controller: _emailController,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         labelText: 'Email',
-                        labelStyle: TextStyle(color: Colors.white),
+                        labelStyle: const TextStyle(color: Colors.white),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                          borderRadius: BorderRadius.circular(25),
                         ),
                         enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25)),
-                          borderSide: BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(25),
+                          borderSide: const BorderSide(color: Colors.white),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25)),
-                          borderSide: BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(25),
+                          borderSide: const BorderSide(color: Colors.white),
                         ),
+                        filled: true,
+                        fillColor: Colors.white.withOpacity(0.2),
                       ),
                       style: const TextStyle(color: Colors.white),
                       keyboardType: TextInputType.emailAddress,
@@ -116,20 +120,22 @@ class _MensagensScreenState extends State<MensagensScreen> {
                     const SizedBox(height: 16),
                     TextField(
                       controller: _telefoneController,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         labelText: 'Telefone (Opcional)',
-                        labelStyle: TextStyle(color: Colors.white),
+                        labelStyle: const TextStyle(color: Colors.white),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                          borderRadius: BorderRadius.circular(25),
                         ),
                         enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25)),
-                          borderSide: BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(25),
+                          borderSide: const BorderSide(color: Colors.white),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25)),
-                          borderSide: BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(25),
+                          borderSide: const BorderSide(color: Colors.white),
                         ),
+                        filled: true,
+                        fillColor: Colors.white.withOpacity(0.2),
                       ),
                       style: const TextStyle(color: Colors.white),
                       keyboardType: TextInputType.phone,
@@ -137,20 +143,22 @@ class _MensagensScreenState extends State<MensagensScreen> {
                     const SizedBox(height: 16),
                     TextField(
                       controller: _textoController,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         labelText: 'Mensagem',
-                        labelStyle: TextStyle(color: Colors.white),
+                        labelStyle: const TextStyle(color: Colors.white),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                          borderRadius: BorderRadius.circular(25),
                         ),
                         enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25)),
-                          borderSide: BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(25),
+                          borderSide: const BorderSide(color: Colors.white),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25)),
-                          borderSide: BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(25),
+                          borderSide: const BorderSide(color: Colors.white),
                         ),
+                        filled: true,
+                        fillColor: Colors.white.withOpacity(0.2),
                       ),
                       style: const TextStyle(color: Colors.white),
                       maxLines: 5,

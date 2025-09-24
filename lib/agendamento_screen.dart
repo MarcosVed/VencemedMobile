@@ -88,20 +88,22 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
                   children: [
                     TextField(
                       controller: _infoController,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         labelText: 'Informações',
-                        labelStyle: TextStyle(color: Colors.white),
+                        labelStyle: const TextStyle(color: Colors.white),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                          borderRadius: BorderRadius.circular(25),
                         ),
                         enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25)),
-                          borderSide: BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(25),
+                          borderSide: const BorderSide(color: Colors.white),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25)),
-                          borderSide: BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(25),
+                          borderSide: const BorderSide(color: Colors.white),
                         ),
+                        filled: true,
+                        fillColor: Colors.white.withOpacity(0.2),
                       ),
                       style: const TextStyle(color: Colors.white),
                       maxLines: 3,
@@ -109,20 +111,22 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
                     const SizedBox(height: 16),
                     TextField(
                       controller: _cepController,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         labelText: 'CEP',
-                        labelStyle: TextStyle(color: Colors.white),
+                        labelStyle: const TextStyle(color: Colors.white),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                          borderRadius: BorderRadius.circular(25),
                         ),
                         enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25)),
-                          borderSide: BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(25),
+                          borderSide: const BorderSide(color: Colors.white),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25)),
-                          borderSide: BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(25),
+                          borderSide: const BorderSide(color: Colors.white),
                         ),
+                        filled: true,
+                        fillColor: Colors.white.withOpacity(0.2),
                       ),
                       style: const TextStyle(color: Colors.white),
                       maxLength: 8,
@@ -130,80 +134,88 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
                     const SizedBox(height: 16),
                     TextField(
                       controller: _numeroController,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         labelText: 'Número',
-                        labelStyle: TextStyle(color: Colors.white),
+                        labelStyle: const TextStyle(color: Colors.white),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                          borderRadius: BorderRadius.circular(25),
                         ),
                         enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25)),
-                          borderSide: BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(25),
+                          borderSide: const BorderSide(color: Colors.white),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25)),
-                          borderSide: BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(25),
+                          borderSide: const BorderSide(color: Colors.white),
                         ),
+                        filled: true,
+                        fillColor: Colors.white.withOpacity(0.2),
                       ),
                       style: const TextStyle(color: Colors.white),
                     ),
                     const SizedBox(height: 16),
                     TextField(
                       controller: _complementoController,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         labelText: 'Complemento',
-                        labelStyle: TextStyle(color: Colors.white),
+                        labelStyle: const TextStyle(color: Colors.white),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                          borderRadius: BorderRadius.circular(25),
                         ),
                         enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25)),
-                          borderSide: BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(25),
+                          borderSide: const BorderSide(color: Colors.white),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25)),
-                          borderSide: BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(25),
+                          borderSide: const BorderSide(color: Colors.white),
                         ),
+                        filled: true,
+                        fillColor: Colors.white.withOpacity(0.2),
                       ),
                       style: const TextStyle(color: Colors.white),
                     ),
                     const SizedBox(height: 16),
                     TextField(
                       controller: _telefoneController,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         labelText: 'Telefone',
-                        labelStyle: TextStyle(color: Colors.white),
+                        labelStyle: const TextStyle(color: Colors.white),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                          borderRadius: BorderRadius.circular(25),
                         ),
                         enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25)),
-                          borderSide: BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(25),
+                          borderSide: const BorderSide(color: Colors.white),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25)),
-                          borderSide: BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(25),
+                          borderSide: const BorderSide(color: Colors.white),
                         ),
+                        filled: true,
+                        fillColor: Colors.white.withOpacity(0.2),
                       ),
                       style: const TextStyle(color: Colors.white),
                     ),
                     const SizedBox(height: 16),
                     DropdownButtonFormField<String>(
                       value: _tipoMedicamento,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         labelText: 'Tipo de Medicamento',
-                        labelStyle: TextStyle(color: Colors.white),
+                        labelStyle: const TextStyle(color: Colors.white),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                          borderRadius: BorderRadius.circular(25),
                         ),
                         enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25)),
-                          borderSide: BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(25),
+                          borderSide: const BorderSide(color: Colors.white),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25)),
-                          borderSide: BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(25),
+                          borderSide: const BorderSide(color: Colors.white),
                         ),
+                        filled: true,
+                        fillColor: Colors.white.withOpacity(0.2),
                       ),
                       style: const TextStyle(color: Colors.white),
                       dropdownColor: const Color.fromRGBO(58, 110, 183, 1),
@@ -217,20 +229,22 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
                     const SizedBox(height: 16),
                     DropdownButtonFormField<String>(
                       value: _tipoColeta,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         labelText: 'Tipo de Coleta',
-                        labelStyle: TextStyle(color: Colors.white),
+                        labelStyle: const TextStyle(color: Colors.white),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                          borderRadius: BorderRadius.circular(25),
                         ),
                         enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25)),
-                          borderSide: BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(25),
+                          borderSide: const BorderSide(color: Colors.white),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25)),
-                          borderSide: BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(25),
+                          borderSide: const BorderSide(color: Colors.white),
                         ),
+                        filled: true,
+                        fillColor: Colors.white.withOpacity(0.2),
                       ),
                       style: const TextStyle(color: Colors.white),
                       dropdownColor: const Color.fromRGBO(58, 110, 183, 1),

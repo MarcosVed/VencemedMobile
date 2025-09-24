@@ -104,21 +104,23 @@ class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> {
                     const SizedBox(height: 30),
                     TextField(
                       controller: _nomeController,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         labelText: 'Nome',
-                        labelStyle: TextStyle(color: Colors.white),
+                        labelStyle: const TextStyle(color: Colors.white),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                          borderRadius: BorderRadius.circular(25),
                         ),
                         enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25)),
-                          borderSide: BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(25),
+                          borderSide: const BorderSide(color: Colors.white),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25)),
-                          borderSide: BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(25),
+                          borderSide: const BorderSide(color: Colors.white),
                         ),
-                        prefixIcon: Icon(Icons.person, color: Colors.white),
+                        filled: true,
+                        fillColor: Colors.white.withOpacity(0.2),
+                        prefixIcon: const Icon(Icons.person, color: Colors.white),
                       ),
                       style: const TextStyle(color: Colors.white),
                     ),
@@ -128,18 +130,22 @@ class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> {
                       decoration: InputDecoration(
                         labelText: 'Email',
                         labelStyle: const TextStyle(color: Colors.white),
-                        border: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(25),
                         ),
-                        enabledBorder: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25)),
-                          borderSide: BorderSide(color: Colors.white),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(25),
+                          borderSide: const BorderSide(color: Colors.white),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(25),
+                          borderSide: const BorderSide(color: Colors.white),
                         ),
                         prefixIcon: const Icon(Icons.email, color: Colors.white),
                         hintText: _email,
                         hintStyle: const TextStyle(color: Colors.white),
                         filled: true,
-                        fillColor: Colors.transparent,
+                        fillColor: Colors.white.withOpacity(0.2),
                       ),
                     ),
                     const SizedBox(height: 16),
@@ -148,18 +154,22 @@ class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> {
                       decoration: InputDecoration(
                         labelText: 'Senha',
                         labelStyle: const TextStyle(color: Colors.white),
-                        border: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(25),
                         ),
-                        enabledBorder: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25)),
-                          borderSide: BorderSide(color: Colors.white),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(25),
+                          borderSide: const BorderSide(color: Colors.white),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(25),
+                          borderSide: const BorderSide(color: Colors.white),
                         ),
                         prefixIcon: const Icon(Icons.lock, color: Colors.white),
                         hintText: _senha,
                         hintStyle: const TextStyle(color: Colors.white),
                         filled: true,
-                        fillColor: Colors.transparent,
+                        fillColor: Colors.white.withOpacity(0.2),
                       ),
                     ),
                     const SizedBox(height: 30),
