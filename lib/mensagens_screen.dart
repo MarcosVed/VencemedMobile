@@ -57,8 +57,8 @@ class _MensagensScreenState extends State<MensagensScreen> {
               ),
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: Colors.transparent,
-                borderRadius: BorderRadius.circular(16),
+                color: Colors.white.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(25),
               ),
               child: SingleChildScrollView(
                 child: Column(
@@ -146,6 +146,7 @@ class _MensagensScreenState extends State<MensagensScreen> {
                       decoration: InputDecoration(
                         labelText: 'Mensagem',
                         labelStyle: const TextStyle(color: Colors.white),
+                        counterStyle: const TextStyle(color: Colors.white),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(25),
                         ),

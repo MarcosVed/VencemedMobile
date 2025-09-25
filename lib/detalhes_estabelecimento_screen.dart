@@ -39,8 +39,8 @@ class DetalhesEstabelecimentoScreen extends StatelessWidget {
                 minHeight: MediaQuery.of(context).size.height - 200,
               ),
               decoration: BoxDecoration(
-                color: Colors.transparent,
-                borderRadius: BorderRadius.circular(16),
+                color: Colors.white.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(25),
               ),
               padding: const EdgeInsets.all(20),
               child: Column(

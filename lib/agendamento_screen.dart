@@ -23,6 +23,30 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
   Estabelecimento? _estabelecimentoSelecionado;
 
   void _agendar() {
+    if (_infoController.text.trim().isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Preencha as informações')),
+      );
+      return;
+    }
+    if (_cepController.text.trim().isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Preencha o CEP')),
+      );
+      return;
+    }
+    if (_numeroController.text.trim().isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Preencha o número')),
+      );
+      return;
+    }
+    if (_telefoneController.text.trim().isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Preencha o telefone')),
+      );
+      return;
+    }
     if (_estabelecimentoSelecionado == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Selecione um local de descarte')),
@@ -79,8 +103,8 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
             child: Container(
               padding: const EdgeInsets.all(24.0),
               decoration: BoxDecoration(
-                color: Colors.transparent,
-                borderRadius: BorderRadius.circular(16),
+                color: Colors.white.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(25),
               ),
               child: SingleChildScrollView(
                 child: Column(
@@ -114,6 +138,7 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
                       decoration: InputDecoration(
                         labelText: 'CEP',
                         labelStyle: const TextStyle(color: Colors.white),
+                        counterStyle: const TextStyle(color: Colors.white),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(25),
                         ),
@@ -218,6 +243,7 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
                         fillColor: Colors.white.withOpacity(0.2),
                       ),
                       style: const TextStyle(color: Colors.white),
+                      iconEnabledColor: Colors.white,
                       dropdownColor: const Color.fromRGBO(58, 110, 183, 1),
                       items: const [
                         DropdownMenuItem(value: 'COMPRIMIDO', child: Text('Comprimido', style: TextStyle(color: Colors.white))),
@@ -247,6 +273,7 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
                         fillColor: Colors.white.withOpacity(0.2),
                       ),
                       style: const TextStyle(color: Colors.white),
+                      iconEnabledColor: Colors.white,
                       dropdownColor: const Color.fromRGBO(58, 110, 183, 1),
                       items: const [
                         DropdownMenuItem(value: 'RETIRADA', child: Text('Retirada', style: TextStyle(color: Colors.white))),

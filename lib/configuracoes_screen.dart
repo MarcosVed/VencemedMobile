@@ -58,8 +58,8 @@ class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> {
               ),
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: Colors.transparent,
-                borderRadius: BorderRadius.circular(16),
+                color: Colors.white.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(25),
               ),
               child: SingleChildScrollView(
                 child: Column(
