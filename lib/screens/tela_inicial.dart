@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
-import 'agendamento_screen.dart';
+import '../agendamento_screen.dart';
 import 'perfil_screen.dart';
-import 'models/coleta.dart';
-import 'services/coleta_service.dart';
+import '../models/coleta.dart';
+import '../services/coleta_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ArchClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     Path path = Path();
     path.lineTo(0, size.height - 30);
-    path.quadraticBezierTo(size.width / 2, size.height + 30, size.width, size.height - 30);
+    path.quadraticBezierTo(
+      size.width / 2,
+      size.height + 30,
+      size.width,
+      size.height - 30,
+    );
     path.lineTo(size.width, 0);
     path.close();
     return path;
@@ -27,6 +33,13 @@ class TelaInicial extends StatefulWidget {
 }
 
 class _TelaInicialState extends State<TelaInicial> {
+  Future<void> _loadUserData() async {
+    final prefs = await SharedPreferences.getInstance();
+    final email = prefs.getString('email');
+    final nome = prefs.getString('nome');
+
+    print('Usuário logado: $nome ($email)');
+  }
 
   List<Coleta> _getColetas() {
     return ColetaService().getColetas();
@@ -34,7 +47,7 @@ class _TelaInicialState extends State<TelaInicial> {
 
   Widget _buildColetasList() {
     final coletas = _getColetas();
-    
+
     if (coletas.isEmpty) {
       return const Center(
         child: Text(
@@ -56,7 +69,7 @@ class _TelaInicialState extends State<TelaInicial> {
   Widget _buildColetaCard(Coleta coleta) {
     Color statusColor;
     IconData statusIcon;
-    
+
     switch (coleta.statusColeta) {
       case 'ATIVO':
         statusColor = Colors.green;
@@ -97,7 +110,10 @@ class _TelaInicialState extends State<TelaInicial> {
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
                     color: statusColor.withOpacity(0.2),
                     borderRadius: BorderRadius.circular(12),
@@ -162,9 +178,7 @@ class _TelaInicialState extends State<TelaInicial> {
         ),
       ),
       body: Container(
-        decoration: const BoxDecoration(
-          color: Color.fromRGBO(58, 110, 183, 1),
-        ),
+        decoration: const BoxDecoration(color: Color.fromRGBO(58, 110, 183, 1)),
         child: Column(
           children: [
             ClipPath(
@@ -191,7 +205,9 @@ class _TelaInicialState extends State<TelaInicial> {
                         onPressed: () async {
                           await Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => const AgendamentoScreen()),
+                            MaterialPageRoute(
+                              builder: (context) => const AgendamentoScreen(),
+                            ),
                           );
                           setState(() {});
                         },
@@ -208,9 +224,7 @@ class _TelaInicialState extends State<TelaInicial> {
                       ),
                     ),
                     const SizedBox(height: 16),
-                    Expanded(
-                      child: _buildColetasList(),
-                    ),
+                    Expanded(child: _buildColetasList()),
                   ],
                 ),
               ),

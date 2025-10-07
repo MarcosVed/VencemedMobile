@@ -31,6 +31,10 @@ class _SelecaoEstabelecimentoScreenState extends State<SelecaoEstabelecimentoScr
         foto: 'assets/images/logo.jpg',
         latitude: -23.5505,
         longitude: -46.6333,
+        logradouro: 'Rua das Flores, 123',
+        bairro: 'Centro',
+        cidade: 'São Paulo',
+        cep: '01310-100',
       ),
       Estabelecimento(
         id: 2,
@@ -42,6 +46,10 @@ class _SelecaoEstabelecimentoScreenState extends State<SelecaoEstabelecimentoScr
         foto: 'assets/images/f.png',
         latitude: -23.5525,
         longitude: -46.6353,
+        logradouro: 'Av. Principal, 456',
+        bairro: 'Vila Nova',
+        cidade: 'São Paulo',
+        cep: '04567-890',
       ),
       Estabelecimento(
         id: 3,
@@ -52,6 +60,10 @@ class _SelecaoEstabelecimentoScreenState extends State<SelecaoEstabelecimentoScr
         descricao: 'Farmácia popular com preços acessíveis. Programa de descarte gratuito de medicamentos para a comunidade.',
         latitude: -23.5485,
         longitude: -46.6313,
+        logradouro: 'Rua do Comércio, 789',
+        bairro: 'Jardim',
+        cidade: 'São Paulo',
+        cep: '02345-678',
       ),
       Estabelecimento(
         id: 4,
@@ -62,6 +74,10 @@ class _SelecaoEstabelecimentoScreenState extends State<SelecaoEstabelecimentoScr
         descricao: 'Centro oficial da prefeitura para descarte de medicamentos. Funcionamento de segunda a sexta, das 8h às 17h.',
         latitude: -23.5545,
         longitude: -46.6373,
+        logradouro: 'Av. Ambiental, 321',
+        bairro: 'Industrial',
+        cidade: 'São Paulo',
+        cep: '08765-432',
       ),
     ];
   }
@@ -73,7 +89,7 @@ class _SelecaoEstabelecimentoScreenState extends State<SelecaoEstabelecimentoScr
   }
 
   Future<void> _buscarPorCep() async {
-    if (_cepController.text.length != 8) {
+    if (_cepController.text.length != 9) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Digite um CEP válido com 8 dígitos')),
       );
@@ -148,7 +164,7 @@ class _SelecaoEstabelecimentoScreenState extends State<SelecaoEstabelecimentoScr
                     child: TextField(
                       controller: _cepController,
                       keyboardType: TextInputType.number,
-                      maxLength: 8,
+                      maxLength: 9,
                       decoration: const InputDecoration(
                         labelText: 'Digite seu CEP',
                         labelStyle: TextStyle(color: Colors.white),
@@ -163,7 +179,7 @@ class _SelecaoEstabelecimentoScreenState extends State<SelecaoEstabelecimentoScr
                       style: const TextStyle(color: Colors.white),
                     ),
                   ),
-                  const SizedBox(width: 8),
+                  const SizedBox(width: 9),
                   ElevatedButton(
                     onPressed: _isLoading ? null : _buscarPorCep,
                     child: _isLoading

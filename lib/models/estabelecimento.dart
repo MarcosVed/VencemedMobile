@@ -8,6 +8,10 @@ class Estabelecimento {
   final String? foto;
   final double? latitude;
   final double? longitude;
+  final String? logradouro;
+  final String? bairro;
+  final String? cidade;
+  final String? cep;
 
   Estabelecimento({
     required this.id,
@@ -19,5 +23,9 @@ class Estabelecimento {
     this.foto,
     this.latitude,
     this.longitude,
+    this.logradouro,
+    this.bairro,
+    this.cidade,
+    this.cep,
   });
 }

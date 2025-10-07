@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ConfiguracoesScreen extends StatefulWidget {
   const ConfiguracoesScreen({super.key});
@@ -8,20 +9,35 @@ class ConfiguracoesScreen extends StatefulWidget {
 }
 
 class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> {
-  final _nomeController = TextEditingController(text: 'João Silva');
-  String _email = 'joao@email.com';
-  String _senha = '••••••••';
+  final _nomeController = TextEditingController();
+  String _email = '';
+  String _senha = '••••••••'; // Senha não é salva por segurança, pode ser exibida como placeholder
   String _foto = 'assets/images/logo.jpg';
 
+  @override
+  void initState() {
+    super.initState();
+    loadUserData();
+  }
+
+  Future<void> loadUserData() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _nomeController.text = prefs.getString('nome') ?? '';
+      _email = prefs.getString('email') ?? '';
+    });
+  }
+
   void _alterarFoto() {
-    // Futuramente será implementado
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Funcionalidade de alterar foto será implementada')),
     );
   }
 
-  void _salvarAlteracoes() {
-    // Futuramente será implementado
+  void _salvarAlteracoes() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('nome', _nomeController.text);
+
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Alterações salvas com sucesso!')),
     );

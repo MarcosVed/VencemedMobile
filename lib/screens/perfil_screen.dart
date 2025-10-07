@@ -1,14 +1,37 @@
 import 'package:flutter/material.dart';
-import 'main.dart';
-import 'mensagens_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vencemed/screens/login_screen.dart';
+import '../mensagens_screen.dart';
 import 'configuracoes_screen.dart';
 
-class PerfilScreen extends StatelessWidget {
+class PerfilScreen extends StatefulWidget {
   const PerfilScreen({super.key});
 
   @override
+  State<PerfilScreen> createState() => _PerfilScreenState();
+}
+
+class _PerfilScreenState extends State<PerfilScreen> {
+  String _nome = '';
+  String _email = '';
+
+  @override
+  void initState() {
+    super.initState();
+    loadUserData();
+  }
+
+  Future<void> loadUserData() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _nome = prefs.getString('nome') ?? 'Usuário';
+      _email = prefs.getString('email') ?? 'email@exemplo.com';
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold( // <-- Aqui adicionamos o Material ancestor
+    return Scaffold(
       backgroundColor: Colors.black.withOpacity(0.3),
       body: GestureDetector(
         onTap: () => Navigator.pop(context),
@@ -25,17 +48,35 @@ class PerfilScreen extends StatelessWidget {
               ),
             ),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 60),
-                const Text(
-                  'Perfil',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                const Center(
+                  child: Text(
+                    'Perfil',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
-                const SizedBox(height: 40),
+                const SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Text(
+                    'Nome: $_nome',
+                    style: const TextStyle(color: Colors.white, fontSize: 16),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+                  child: Text(
+                    'Email: $_email',
+                    style: const TextStyle(color: Colors.white, fontSize: 16),
+                  ),
+                ),
+                const SizedBox(height: 20),
                 InkWell(
                   onTap: () {
                     Navigator.push(
@@ -79,7 +120,10 @@ class PerfilScreen extends StatelessWidget {
                   ),
                 ),
                 InkWell(
-                  onTap: () {
+                  onTap: () async {
+                    final prefs = await SharedPreferences.getInstance();
+                    await prefs.clear(); // Limpa os dados ao sair
+
                     Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(builder: (context) => const LoginScreen()),
