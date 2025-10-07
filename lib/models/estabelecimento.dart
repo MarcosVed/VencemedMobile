@@ -6,6 +6,8 @@ class Estabelecimento {
   final String tipo;
   final String descricao;
   final String? foto;
+  final double? latitude;
+  final double? longitude;
 
   Estabelecimento({
     required this.id,
@@ -15,5 +17,7 @@ class Estabelecimento {
     required this.tipo,
     required this.descricao,
     this.foto,
+    this.latitude,
+    this.longitude,
   });
 }
