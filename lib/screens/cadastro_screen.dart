@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'tela_inicial.dart';
 
 class CadastroScreen extends StatefulWidget {
@@ -13,11 +16,76 @@ class _CadastroScreenState extends State<CadastroScreen> {
   final _emailController = TextEditingController();
   final _senhaController = TextEditingController();
   bool _obscurePassword = true;
+  bool _isLoading = false;
 
-  void _cadastrar() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const TelaInicial()),
+  Future<void> _cadastrar() async {
+    setState(() => _isLoading = true);
+
+    final url = Uri.parse('http://localhost:8080/usuario/salvar');
+ // use 10.0.2.2 para emulador Android
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'nome': _nomeController.text,
+        'email': _emailController.text,
+        'senha': _senhaController.text,
+        'nivelAcesso': 'USER',
+        'statusUsuario': 'ATIVO'
+      }),
+    );
+
+    setState(() => _isLoading = false);
+
+    if (response.statusCode == 201) {
+      final responseData = jsonDecode(response.body);
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('userName', _nomeController.text);
+      await prefs.setString('userEmail', _emailController.text);
+      await prefs.setInt('userId', responseData['id'] ?? 0);
+      
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const TelaInicial()),
+      );
+    } else if (response.statusCode == 409) {
+      _showError('Email já cadastrado.');
+    } else {
+      _showError('Erro ao cadastrar: ${response.body}');
+    }
+  }
+
+  void _showError(String message) {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: const Text('Erro'),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  InputDecoration _inputDecoration(String label) {
+    return InputDecoration(
+      labelText: label,
+      labelStyle: const TextStyle(color: Colors.white),
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular(25)),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(25),
+        borderSide: const BorderSide(color: Colors.white),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(25),
+        borderSide: const BorderSide(color: Colors.white),
+      ),
+      filled: true,
+      fillColor: Colors.white.withOpacity(0.2),
     );
   }
 
@@ -38,100 +106,56 @@ class _CadastroScreenState extends State<CadastroScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-              Image.asset(
-                'assets/images/f.png',
-                height: 200,
-              ),
-              const SizedBox(height: 24),
-              const Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'Criar conta',
-                  style: TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                  Image.asset('assets/images/f.png', height: 200),
+                  const SizedBox(height: 24),
+                  const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Criar conta',
+                      style: TextStyle(
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              const SizedBox(height: 32),
+                  const SizedBox(height: 32),
                   TextField(
                     controller: _nomeController,
-                    decoration: InputDecoration(
-                      labelText: 'Nome',
-                      labelStyle: const TextStyle(color: Colors.white),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(25),
-                        borderSide: const BorderSide(color: Colors.white),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(25),
-                        borderSide: const BorderSide(color: Colors.white),
-                      ),
-                      filled: true,
-                      fillColor: Colors.white.withOpacity(0.2),
-                    ),
+                    decoration: _inputDecoration('Nome'),
                     style: const TextStyle(color: Colors.white),
                   ),
                   const SizedBox(height: 16),
                   TextField(
                     controller: _emailController,
-                    decoration: InputDecoration(
-                      labelText: 'Email',
-                      labelStyle: const TextStyle(color: Colors.white),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(25),
-                        borderSide: const BorderSide(color: Colors.white),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(25),
-                        borderSide: const BorderSide(color: Colors.white),
-                      ),
-                      filled: true,
-                      fillColor: Colors.white.withOpacity(0.2),
-                    ),
+                    decoration: _inputDecoration('Email'),
                     style: const TextStyle(color: Colors.white),
                   ),
                   const SizedBox(height: 16),
                   TextField(
                     controller: _senhaController,
                     obscureText: _obscurePassword,
-                    decoration: InputDecoration(
-                      labelText: 'Senha',
-                      labelStyle: const TextStyle(color: Colors.white),
+                    decoration: _inputDecoration('Senha').copyWith(
                       suffixIcon: IconButton(
                         icon: Icon(
-                          _obscurePassword ? Icons.visibility : Icons.visibility_off,
+                          _obscurePassword
+                              ? Icons.visibility
+                              : Icons.visibility_off,
                           color: Colors.white,
                         ),
-                        onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+                        onPressed: () => setState(() {
+                          _obscurePassword = !_obscurePassword;
+                        }),
                       ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(25),
-                        borderSide: const BorderSide(color: Colors.white),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(25),
-                        borderSide: const BorderSide(color: Colors.white),
-                      ),
-                      filled: true,
-                      fillColor: Colors.white.withOpacity(0.2),
                     ),
                     style: const TextStyle(color: Colors.white),
                   ),
                   const SizedBox(height: 24),
                   ElevatedButton(
-                    onPressed: _cadastrar,
-                    child: const Text('Cadastrar'),
+                    onPressed: _isLoading ? null : _cadastrar,
+                    child: _isLoading
+                        ? const CircularProgressIndicator(color: Colors.white)
+                        : const Text('Cadastrar'),
                   ),
                 ],
               ),
@@ -140,14 +164,8 @@ class _CadastroScreenState extends State<CadastroScreen> {
               top: 50,
               left: 24,
               child: IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: const Icon(
-                  Icons.arrow_back,
-                  color: Colors.white,
-                  size: 30,
-                ),
+                onPressed: () => Navigator.pop(context),
+                icon: const Icon(Icons.arrow_back, color: Colors.white, size: 30),
               ),
             ),
           ],

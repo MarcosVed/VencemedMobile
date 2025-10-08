@@ -12,23 +12,6 @@ class PerfilScreen extends StatefulWidget {
 }
 
 class _PerfilScreenState extends State<PerfilScreen> {
-  String _nome = '';
-  String _email = '';
-
-  @override
-  void initState() {
-    super.initState();
-    loadUserData();
-  }
-
-  Future<void> loadUserData() async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _nome = prefs.getString('nome') ?? 'Usuário';
-      _email = prefs.getString('email') ?? 'email@exemplo.com';
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,32 +31,14 @@ class _PerfilScreenState extends State<PerfilScreen> {
               ),
             ),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 60),
-                const Center(
-                  child: Text(
-                    'Perfil',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Text(
-                    'Nome: $_nome',
-                    style: const TextStyle(color: Colors.white, fontSize: 16),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
-                  child: Text(
-                    'Email: $_email',
-                    style: const TextStyle(color: Colors.white, fontSize: 16),
+                const Text(
+                  'Perfil',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
                   ),
                 ),
                 const SizedBox(height: 20),

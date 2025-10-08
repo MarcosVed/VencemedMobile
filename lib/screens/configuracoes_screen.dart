@@ -23,8 +23,8 @@ class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> {
   Future<void> loadUserData() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      _nomeController.text = prefs.getString('nome') ?? '';
-      _email = prefs.getString('email') ?? '';
+      _nomeController.text = prefs.getString('userName') ?? '';
+      _email = prefs.getString('userEmail') ?? '';
     });
   }
 
@@ -36,7 +36,7 @@ class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> {
 
   void _salvarAlteracoes() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('nome', _nomeController.text);
+    await prefs.setString('userName', _nomeController.text);
 
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Alterações salvas com sucesso!')),
