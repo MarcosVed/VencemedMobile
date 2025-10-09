@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'models/estabelecimento.dart';
+import '../models/estabelecimento.dart';
 
 class DetalhesEstabelecimentoScreen extends StatelessWidget {
   final Estabelecimento estabelecimento;

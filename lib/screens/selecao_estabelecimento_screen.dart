@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
-import 'models/estabelecimento.dart';
+import '../models/estabelecimento.dart';
 import 'detalhes_estabelecimento_screen.dart';
-import 'services/cep_service.dart';
+import '../services/cep_service.dart';
 
 class SelecaoEstabelecimentoScreen extends StatefulWidget {
   const SelecaoEstabelecimentoScreen({super.key});

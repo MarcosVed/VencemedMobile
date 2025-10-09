@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../agendamento_screen.dart';
+import 'agendamento_screen.dart';
 import 'perfil_screen.dart';
 import '../models/coleta.dart';
 import '../services/coleta_service.dart';

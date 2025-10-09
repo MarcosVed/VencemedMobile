@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vencemed/screens/login_screen.dart';
-import '../mensagens_screen.dart';
+import 'mensagens_screen.dart';
 import 'configuracoes_screen.dart';
 
 class PerfilScreen extends StatefulWidget {
