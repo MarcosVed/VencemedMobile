@@ -3,6 +3,7 @@ import 'agendamento_screen.dart';
 import 'perfil_screen.dart';
 import '../models/coleta.dart';
 import '../services/coleta_service.dart';
+import '../services/coleta_backend_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ArchClipper extends CustomClipper<Path> {
@@ -41,27 +42,42 @@ class _TelaInicialState extends State<TelaInicial> {
     print('Usuário logado: $nome ($email)');
   }
 
-  List<Coleta> _getColetas() {
-    return ColetaService().getColetas();
+  Future<List<Coleta>> _getColetas() async {
+    final coletasBackend = await ColetaBackendService.listarMinhasColetas();
+    if (coletasBackend.isNotEmpty) {
+      return coletasBackend;
+    }
+    return await ColetaService().getColetas();
   }
 
   Widget _buildColetasList() {
-    final coletas = _getColetas();
+    return FutureBuilder<List<Coleta>>(
+      future: _getColetas(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(color: Colors.white),
+          );
+        }
+        
+        final coletas = snapshot.data ?? [];
+        
+        if (coletas.isEmpty) {
+          return const Center(
+            child: Text(
+              'Nenhuma coleta encontrada',
+              style: TextStyle(color: Colors.white70),
+            ),
+          );
+        }
 
-    if (coletas.isEmpty) {
-      return const Center(
-        child: Text(
-          'Nenhuma coleta encontrada',
-          style: TextStyle(color: Colors.white70),
-        ),
-      );
-    }
-
-    return ListView.builder(
-      itemCount: coletas.length,
-      itemBuilder: (context, index) {
-        final coleta = coletas[index];
-        return _buildColetaCard(coleta);
+        return ListView.builder(
+          itemCount: coletas.length,
+          itemBuilder: (context, index) {
+            final coleta = coletas[index];
+            return _buildColetaCard(coleta);
+          },
+        );
       },
     );
   }

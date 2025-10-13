@@ -18,10 +18,11 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _obscurePassword = true;
   bool _isLoading = false;
 
-  Future<void> _saveUserData(String email, String nome) async {
+  Future<void> _saveUserData(Map<String, dynamic> userData) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('email', email);
-    await prefs.setString('nome', nome);
+    await prefs.setString('email', userData['email']);
+    await prefs.setString('nome', userData['nome']);
+    await prefs.setInt('userId', userData['id']);
   }
 
   Future<void> _login() async {
@@ -39,8 +40,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
     setState(() => _isLoading = false);
     if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-      await _saveUserData(data['email'], data['nome']);
+      final responseData = jsonDecode(response.body);
+      final userData = responseData is List ? responseData.first : responseData;
+      
+      await _saveUserData(userData);
 
       Navigator.pushReplacement(
         context,

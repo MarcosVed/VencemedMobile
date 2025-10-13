@@ -1,29 +1,47 @@
+import 'estabelecimento.dart';
+
 class Coleta {
   final int id;
   final String info;
   final String cep;
   final String numero;
-  final String complemento;
+  final String? complemento;
   final String telefone;
   final String tipoMedicamento;
   final String tipoColeta;
   final DateTime dataColeta;
-  final int usuarioId;
-  final int estabelecimentoId;
   final String statusColeta;
+  final Estabelecimento? estabelecimento;
 
   Coleta({
     required this.id,
     required this.info,
     required this.cep,
     required this.numero,
-    required this.complemento,
+    this.complemento,
     required this.telefone,
     required this.tipoMedicamento,
     required this.tipoColeta,
     required this.dataColeta,
-    required this.usuarioId,
-    required this.estabelecimentoId,
     required this.statusColeta,
+    this.estabelecimento,
   });
+
+  factory Coleta.fromJson(Map<String, dynamic> json) {
+    return Coleta(
+      id: json['id'],
+      info: json['info'],
+      cep: json['cep'],
+      numero: json['numero'],
+      complemento: json['complemento'],
+      telefone: json['telefone'],
+      tipoMedicamento: json['tipoMedicamento'],
+      tipoColeta: json['tipoColeta'],
+      dataColeta: DateTime.parse(json['dataColeta']),
+      statusColeta: json['statusColeta'],
+      estabelecimento: json['estabelecimento'] != null
+          ? Estabelecimento.fromJson(json['estabelecimento'])
+          : null,
+    );
+  }
 }

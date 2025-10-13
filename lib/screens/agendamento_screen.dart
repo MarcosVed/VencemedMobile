@@ -3,6 +3,7 @@ import 'selecao_estabelecimento_screen.dart';
 import '../models/estabelecimento.dart';
 import '../models/coleta.dart';
 import '../services/coleta_service.dart';
+import '../services/coleta_backend_service.dart';
 
 class AgendamentoScreen extends StatefulWidget {
   const AgendamentoScreen({super.key});
@@ -33,7 +34,7 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
     super.dispose();
   }
 
-  void _agendar() {
+  void _agendar() async {
     if (!_formKey.currentState!.validate()) return;
     if (_estabelecimentoSelecionado == null) {
       _showSnackBar('Selecione um local de descarte');
@@ -41,22 +42,28 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
     }
     
     final coleta = Coleta(
-      id: ColetaService().getNextId(),
+      id: 0,
       info: _infoController.text.trim(),
       cep: _cepController.text.trim(),
       numero: _numeroController.text.trim(),
-      complemento: _complementoController.text.trim(),
+      complemento: _complementoController.text.trim().isEmpty ? null : _complementoController.text.trim(),
       telefone: _telefoneController.text.trim(),
       tipoMedicamento: _tipoMedicamento,
       tipoColeta: _tipoColeta,
       dataColeta: DateTime.now().add(const Duration(days: 1)),
-      usuarioId: 1,
-      estabelecimentoId: _estabelecimentoSelecionado!.id,
       statusColeta: 'ATIVO',
+      estabelecimento: _estabelecimentoSelecionado,
     );
     
-    ColetaService().adicionarColeta(coleta);
-    _showSnackBar('Coleta agendada com sucesso!');
+    final sucesso = await ColetaBackendService.agendarColeta(coleta);
+    
+    if (sucesso) {
+      ColetaService().adicionarColeta(coleta);
+      _showSnackBar('Coleta agendada com sucesso!');
+    } else {
+      _showSnackBar('Erro ao agendar coleta. Tente novamente.');
+    }
+    
     Navigator.pop(context);
   }
 

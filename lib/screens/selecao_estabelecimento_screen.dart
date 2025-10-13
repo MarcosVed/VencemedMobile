@@ -4,6 +4,7 @@ import 'package:latlong2/latlong.dart';
 import '../models/estabelecimento.dart';
 import 'detalhes_estabelecimento_screen.dart';
 import '../services/cep_service.dart';
+import '../services/estabelecimento_service.dart';
 
 class SelecaoEstabelecimentoScreen extends StatefulWidget {
   const SelecaoEstabelecimentoScreen({super.key});
@@ -19,77 +20,27 @@ class _SelecaoEstabelecimentoScreenState extends State<SelecaoEstabelecimentoScr
   List<Estabelecimento> _estabelecimentosProximos = [];
   bool _isLoading = false;
 
-  List<Estabelecimento> _getTodosEstabelecimentos() {
-    return [
-      Estabelecimento(
-        id: 1,
-        nome: 'Drogasil',
-        endereco: 'Rua das Flores, 123 - Centro',
-        telefone: '(11) 3333-4444',
-        tipo: 'FARMACIA',
-        descricao: 'Farmácia com amplo horário de funcionamento. Especializada em descarte seguro de medicamentos vencidos e seringas.',
-        foto: 'assets/images/logo.jpg',
-        latitude: -23.5505,
-        longitude: -46.6333,
-        logradouro: 'Rua das Flores, 123',
-        bairro: 'Centro',
-        cidade: 'São Paulo',
-        cep: '01310-100',
-      ),
-      Estabelecimento(
-        id: 2,
-        nome: 'Drogaria Miro',
-        endereco: 'Av. Principal, 456 - Vila Nova',
-        telefone: '(11) 5555-6666',
-        tipo: 'FARMACIA',
-        descricao: 'Drogaria familiar com atendimento personalizado. Aceita todos os tipos de medicamentos para descarte responsável.',
-        foto: 'assets/images/f.png',
-        latitude: -23.5525,
-        longitude: -46.6353,
-        logradouro: 'Av. Principal, 456',
-        bairro: 'Vila Nova',
-        cidade: 'São Paulo',
-        cep: '04567-890',
-      ),
-      Estabelecimento(
-        id: 3,
-        nome: 'Farmácia Popular',
-        endereco: 'Rua do Comércio, 789 - Jardim',
-        telefone: '(11) 7777-8888',
-        tipo: 'FARMACIA',
-        descricao: 'Farmácia popular com preços acessíveis. Programa de descarte gratuito de medicamentos para a comunidade.',
-        latitude: -23.5485,
-        longitude: -46.6313,
-        logradouro: 'Rua do Comércio, 789',
-        bairro: 'Jardim',
-        cidade: 'São Paulo',
-        cep: '02345-678',
-      ),
-      Estabelecimento(
-        id: 4,
-        nome: 'Centro de Descarte Municipal',
-        endereco: 'Av. Ambiental, 321 - Industrial',
-        telefone: '(11) 9999-0000',
-        tipo: 'ESTABELECIMENTO',
-        descricao: 'Centro oficial da prefeitura para descarte de medicamentos. Funcionamento de segunda a sexta, das 8h às 17h.',
-        latitude: -23.5545,
-        longitude: -46.6373,
-        logradouro: 'Av. Ambiental, 321',
-        bairro: 'Industrial',
-        cidade: 'São Paulo',
-        cep: '08765-432',
-      ),
-    ];
+  Future<List<Estabelecimento>> _buscarEstabelecimentosPorCep(String cep) async {
+    return await EstabelecimentoService.buscarPorCep(cep);
   }
 
   @override
   void initState() {
     super.initState();
-    _estabelecimentosProximos = _getTodosEstabelecimentos();
+    _estabelecimentosProximos = [];
+    _carregarEstabelecimentos();
+  }
+
+  Future<void> _carregarEstabelecimentos() async {
+    final estabelecimentos = await EstabelecimentoService.listarTodos();
+    setState(() {
+      _estabelecimentosProximos = estabelecimentos;
+    });
   }
 
   Future<void> _buscarPorCep() async {
-    if (_cepController.text.length != 9) {
+    final cep = _cepController.text.replaceAll('-', '');
+    if (cep.length != 8) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Digite um CEP válido com 8 dígitos')),
       );
@@ -98,15 +49,25 @@ class _SelecaoEstabelecimentoScreenState extends State<SelecaoEstabelecimentoScr
 
     setState(() => _isLoading = true);
 
-    final cepData = await CepService.buscarCep(_cepController.text);
+    print('Iniciando busca por CEP: $cep');
+    
+    final cepData = await CepService.buscarCep(cep);
+    print('Dados do CEP: $cepData');
+    
+    final estabelecimentos = await _buscarEstabelecimentosPorCep(cep);
+    print('Estabelecimentos encontrados: ${estabelecimentos.length}');
     
     if (cepData != null) {
       final newLocation = LatLng(cepData['latitude'], cepData['longitude']);
       setState(() {
         _currentLocation = newLocation;
-        _estabelecimentosProximos = _calcularEstabelecimentosProximos(newLocation);
+        _estabelecimentosProximos = _calcularEstabelecimentosProximos(newLocation, estabelecimentos);
       });
       _mapController.move(newLocation, 14.0);
+      
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('${estabelecimentos.length} estabelecimentos encontrados')),
+      );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('CEP não encontrado')),
@@ -116,10 +77,9 @@ class _SelecaoEstabelecimentoScreenState extends State<SelecaoEstabelecimentoScr
     setState(() => _isLoading = false);
   }
 
-  List<Estabelecimento> _calcularEstabelecimentosProximos(LatLng location) {
-    final estabelecimentos = _getTodosEstabelecimentos();
-    
+  List<Estabelecimento> _calcularEstabelecimentosProximos(LatLng location, List<Estabelecimento> estabelecimentos) {
     estabelecimentos.sort((a, b) {
+      if (a.latitude == null || b.latitude == null) return 0;
       final distA = CepService.calcularDistancia(
         location.latitude, location.longitude,
         a.latitude!, a.longitude!,
@@ -179,7 +139,7 @@ class _SelecaoEstabelecimentoScreenState extends State<SelecaoEstabelecimentoScr
                       style: const TextStyle(color: Colors.white),
                     ),
                   ),
-                  const SizedBox(width: 9),
+                  const SizedBox(width: 8),
                   ElevatedButton(
                     onPressed: _isLoading ? null : _buscarPorCep,
                     child: _isLoading

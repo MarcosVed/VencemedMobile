@@ -1,31 +1,47 @@
 class Estabelecimento {
   final int id;
   final String nome;
-  final String endereco;
+  final String info;
+  final String cep;
+  final String numero;
+  final String? complemento;
   final String telefone;
   final String tipo;
-  final String descricao;
-  final String? foto;
+  final String coleta;
+  final String statusEstabelecimento;
   final double? latitude;
   final double? longitude;
-  final String? logradouro;
-  final String? bairro;
-  final String? cidade;
-  final String? cep;
 
   Estabelecimento({
     required this.id,
     required this.nome,
-    required this.endereco,
+    required this.info,
+    required this.cep,
+    required this.numero,
+    this.complemento,
     required this.telefone,
     required this.tipo,
-    required this.descricao,
-    this.foto,
+    required this.coleta,
+    required this.statusEstabelecimento,
     this.latitude,
     this.longitude,
-    this.logradouro,
-    this.bairro,
-    this.cidade,
-    this.cep,
   });
+
+  factory Estabelecimento.fromJson(Map<String, dynamic> json) {
+    return Estabelecimento(
+      id: json['id'],
+      nome: json['nome'],
+      info: json['info'],
+      cep: json['cep'],
+      numero: json['numero'],
+      complemento: json['complemento'],
+      telefone: json['telefone'],
+      tipo: json['tipo'],
+      coleta: json['coleta'],
+      statusEstabelecimento: json['statusEstabelecimento'],
+    );
+  }
+
+  String get endereco => '$numero${complemento != null ? ', $complemento' : ''}';
+  String get descricao => info;
 }

@@ -57,19 +57,7 @@ class DetalhesEstabelecimentoScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        if (estabelecimento.foto != null)
-                          Center(
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(8),
-                              child: Image.asset(
-                                estabelecimento.foto!,
-                                height: 150,
-                                width: double.infinity,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                        if (estabelecimento.foto != null) const SizedBox(height: 16),
+
                         Row(
                           children: [
                             Icon(
