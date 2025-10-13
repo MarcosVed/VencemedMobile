@@ -16,7 +16,7 @@ class SelecaoEstabelecimentoScreen extends StatefulWidget {
 class _SelecaoEstabelecimentoScreenState extends State<SelecaoEstabelecimentoScreen> {
   final TextEditingController _cepController = TextEditingController();
   final MapController _mapController = MapController();
-  LatLng _currentLocation = const LatLng(-23.5505, -46.6333);
+  LatLng _currentLocation = const LatLng(-23.5124538,-46.8898006);
   List<Estabelecimento> _estabelecimentosProximos = [];
   bool _isLoading = false;
 
