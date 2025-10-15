@@ -20,9 +20,7 @@ class _SelecaoEstabelecimentoScreenState extends State<SelecaoEstabelecimentoScr
   List<Estabelecimento> _estabelecimentosProximos = [];
   bool _isLoading = false;
 
-  Future<List<Estabelecimento>> _buscarEstabelecimentosPorCep(String cep) async {
-    return await EstabelecimentoService.buscarPorCep(cep);
-  }
+
 
   @override
   void initState() {
@@ -49,24 +47,25 @@ class _SelecaoEstabelecimentoScreenState extends State<SelecaoEstabelecimentoScr
 
     setState(() => _isLoading = true);
 
-    print('Iniciando busca por CEP: $cep');
-    
     final cepData = await CepService.buscarCep(cep);
-    print('Dados do CEP: $cepData');
-    
-    final estabelecimentos = await _buscarEstabelecimentosPorCep(cep);
-    print('Estabelecimentos encontrados: ${estabelecimentos.length}');
     
     if (cepData != null) {
       final newLocation = LatLng(cepData['latitude'], cepData['longitude']);
+      
+      // Buscar todos os estabelecimentos do BD
+      final todosEstabelecimentos = await EstabelecimentoService.listarTodos();
+      
+      // Filtrar estabelecimentos próximos (raio de 10km)
+      final estabelecimentosProximos = _filtrarEstabelecimentosProximos(newLocation, todosEstabelecimentos, 10.0);
+      
       setState(() {
         _currentLocation = newLocation;
-        _estabelecimentosProximos = _calcularEstabelecimentosProximos(newLocation, estabelecimentos);
+        _estabelecimentosProximos = estabelecimentosProximos;
       });
       _mapController.move(newLocation, 14.0);
       
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('${estabelecimentos.length} estabelecimentos encontrados')),
+        SnackBar(content: Text('${estabelecimentosProximos.length} estabelecimentos encontrados próximos')),
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -77,9 +76,20 @@ class _SelecaoEstabelecimentoScreenState extends State<SelecaoEstabelecimentoScr
     setState(() => _isLoading = false);
   }
 
-  List<Estabelecimento> _calcularEstabelecimentosProximos(LatLng location, List<Estabelecimento> estabelecimentos) {
-    estabelecimentos.sort((a, b) {
-      if (a.latitude == null || b.latitude == null) return 0;
+  List<Estabelecimento> _filtrarEstabelecimentosProximos(LatLng location, List<Estabelecimento> estabelecimentos, double raioKm) {
+    final estabelecimentosProximos = estabelecimentos.where((estabelecimento) {
+      if (estabelecimento.latitude == null || estabelecimento.longitude == null) return false;
+      
+      final distancia = CepService.calcularDistancia(
+        location.latitude, location.longitude,
+        estabelecimento.latitude!, estabelecimento.longitude!,
+      );
+      
+      return distancia <= raioKm;
+    }).toList();
+    
+    // Ordenar por distância
+    estabelecimentosProximos.sort((a, b) {
       final distA = CepService.calcularDistancia(
         location.latitude, location.longitude,
         a.latitude!, a.longitude!,
@@ -91,7 +101,7 @@ class _SelecaoEstabelecimentoScreenState extends State<SelecaoEstabelecimentoScr
       return distA.compareTo(distB);
     });
     
-    return estabelecimentos;
+    return estabelecimentosProximos;
   }
 
   @override
