@@ -125,30 +125,40 @@ class _TelaInicialState extends State<TelaInicial> {
                     ),
                   ),
                 ),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 4,
-                  ),
-                  decoration: BoxDecoration(
-                    color: statusColor.withOpacity(0.2),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(statusIcon, size: 16, color: statusColor),
-                      const SizedBox(width: 4),
-                      Text(
-                        coleta.statusColeta,
-                        style: TextStyle(
-                          color: statusColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12,
-                        ),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
                       ),
-                    ],
-                  ),
+                      decoration: BoxDecoration(
+                        color: statusColor.withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(statusIcon, size: 16, color: statusColor),
+                          const SizedBox(width: 4),
+                          Text(
+                            coleta.statusColeta,
+                            style: TextStyle(
+                              color: statusColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    if (coleta.statusColeta == 'ATIVO')
+                      IconButton(
+                        icon: const Icon(Icons.delete, color: Colors.red),
+                        onPressed: () => _cancelarColeta(coleta),
+                      ),
+                  ],
                 ),
               ],
             ),
@@ -161,10 +171,87 @@ class _TelaInicialState extends State<TelaInicial> {
               'Data: ${coleta.dataColeta.day}/${coleta.dataColeta.month}/${coleta.dataColeta.year}',
               style: const TextStyle(color: Colors.white),
             ),
+            if (coleta.estabelecimento != null)
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 8),
+                  const Divider(color: Colors.white54),
+                  const SizedBox(height: 8),
+                  Row(
+                    children: [
+                      Icon(
+                        coleta.estabelecimento!.tipo == 'FARMACIA'
+                            ? Icons.local_pharmacy
+                            : Icons.store,
+                        color: Colors.green,
+                        size: 20,
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          coleta.estabelecimento!.nome,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    'Telefone: ${coleta.estabelecimento!.telefone}',
+                    style: const TextStyle(color: Colors.white70),
+                  ),
+                  Text(
+                    'Info: ${coleta.estabelecimento!.info}',
+                    style: const TextStyle(color: Colors.white70),
+                  ),
+                  Text(
+                    'CEP: ${coleta.estabelecimento!.cep}',
+                    style: const TextStyle(color: Colors.white70),
+                  ),
+                ],
+              )
           ],
         ),
       ),
     );
+  }
+
+  Future<void> _cancelarColeta(Coleta coleta) async {
+    final confirmar = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Cancelar Coleta'),
+        content: const Text('Tem certeza que deseja cancelar esta coleta?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('Não'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text('Sim'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmar == true) {
+      final sucesso = await ColetaBackendService.deletarColeta(coleta.id);
+      if (sucesso) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Coleta cancelada com sucesso!')),
+        );
+        setState(() {});
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Erro ao cancelar coleta')),
+        );
+      }
+    }
   }
 
   @override

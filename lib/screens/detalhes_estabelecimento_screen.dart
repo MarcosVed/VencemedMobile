@@ -9,6 +9,33 @@ class DetalhesEstabelecimentoScreen extends StatelessWidget {
     required this.estabelecimento,
   });
 
+  Widget _buildInfoRow(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: 100,
+            child: Text(
+              '$label:',
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+          ),
+          Expanded(
+            child: Text(
+              value,
+              style: const TextStyle(color: Colors.white),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,13 +84,12 @@ class DetalhesEstabelecimentoScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-
                         Row(
                           children: [
                             Icon(
                               estabelecimento.tipo == 'FARMACIA' 
                                 ? Icons.local_pharmacy 
-                                : Icons.business,
+                                : Icons.store,
                               color: Colors.green,
                               size: 32,
                             ),
@@ -81,46 +107,14 @@ class DetalhesEstabelecimentoScreen extends StatelessWidget {
                           ],
                         ),
                         const SizedBox(height: 16),
-                        const Text(
-                          'Descrição',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          estabelecimento.descricao,
-                          style: const TextStyle(fontSize: 16, color: Colors.white),
-                        ),
-                        const SizedBox(height: 16),
-                        const Text(
-                          'Informações de Contato',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Row(
-                          children: [
-                            const Icon(Icons.location_on, color: Colors.white),
-                            const SizedBox(width: 8),
-                            Expanded(
-                              child: Text(estabelecimento.endereco, style: const TextStyle(color: Colors.white)),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 8),
-                        Row(
-                          children: [
-                            const Icon(Icons.phone, color: Colors.white),
-                            const SizedBox(width: 8),
-                            Text(estabelecimento.telefone, style: const TextStyle(color: Colors.white)),
-                          ],
-                        ),
+                        _buildInfoRow('Informações', estabelecimento.info),
+                        _buildInfoRow('CEP', estabelecimento.cep),
+                        _buildInfoRow('Número', estabelecimento.numero),
+                        if (estabelecimento.complemento != null)
+                          _buildInfoRow('Complemento', estabelecimento.complemento!),
+                        _buildInfoRow('Telefone', estabelecimento.telefone),
+                        _buildInfoRow('Tipo', estabelecimento.tipo),
+                        _buildInfoRow('Coleta', estabelecimento.coleta),
                       ],
                     ),
                   ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vencemed/screens/login_screen.dart';
-import 'mensagens_screen.dart';
+import 'lista_mensagens_screen.dart';
 import 'configuracoes_screen.dart';
 
 class PerfilScreen extends StatefulWidget {
@@ -67,7 +67,7 @@ class _PerfilScreenState extends State<PerfilScreen> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const MensagensScreen()),
+                      MaterialPageRoute(builder: (context) => const ListaMensagensScreen()),
                     );
                   },
                   child: const Padding(

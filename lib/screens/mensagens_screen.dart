@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
+import '../models/mensagem.dart';
+import '../services/mensagem_service.dart';
 
 class MensagensScreen extends StatefulWidget {
   const MensagensScreen({super.key});
@@ -13,17 +15,50 @@ class _MensagensScreenState extends State<MensagensScreen> {
   final _emailController = TextEditingController();
   final _telefoneController = TextEditingController();
   final _textoController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
-  void _enviarMensagem() {
-    // Futuramente será implementado
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Mensagem enviada com sucesso!')),
+  @override
+  void initState() {
+    super.initState();
+    _carregarDadosUsuario();
+  }
+
+  Future<void> _carregarDadosUsuario() async {
+    final prefs = await SharedPreferences.getInstance();
+    final nome = prefs.getString('nome') ?? '';
+    final email = prefs.getString('email') ?? '';
+    
+    setState(() {
+      _emissorController.text = nome;
+      _emailController.text = email;
+    });
+  }
+
+  Future<void> _enviarMensagem() async {
+    if (!_formKey.currentState!.validate()) return;
+    
+    final mensagem = Mensagem(
+      id: 0,
+      emissor: _emissorController.text.trim(),
+      email: _emailController.text.trim(),
+      telefone: _telefoneController.text.isEmpty ? null : _telefoneController.text.trim(),
+      texto: _textoController.text.trim(),
+      dataMensagem: DateTime.now(),
+      statusMensagem: 'ATIVO',
     );
     
-    _emissorController.clear();
-    _emailController.clear();
-    _telefoneController.clear();
-    _textoController.clear();
+    final sucesso = await MensagemService.enviarMensagem(mensagem);
+    
+    if (sucesso) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Mensagem enviada com sucesso!')),
+      );
+      Navigator.pop(context);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Erro ao enviar mensagem')),
+      );
+    }
   }
 
   @override
@@ -60,10 +95,12 @@ class _MensagensScreenState extends State<MensagensScreen> {
                 color: Colors.white.withOpacity(0.2),
                 borderRadius: BorderRadius.circular(25),
               ),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+              child: Form(
+                key: _formKey,
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
                     const Text(
                       'Enviar Mensagem',
                       style: TextStyle(
@@ -73,10 +110,10 @@ class _MensagensScreenState extends State<MensagensScreen> {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    TextField(
+                    TextFormField(
                       controller: _emissorController,
                       decoration: InputDecoration(
-                        labelText: 'Nome do Emissor',
+                        labelText: 'Emissor',
                         labelStyle: const TextStyle(color: Colors.white),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(25),
@@ -93,9 +130,10 @@ class _MensagensScreenState extends State<MensagensScreen> {
                         fillColor: Colors.white.withOpacity(0.2),
                       ),
                       style: const TextStyle(color: Colors.white),
+                      validator: (value) => value?.trim().isEmpty == true ? 'Campo obrigatório' : null,
                     ),
                     const SizedBox(height: 16),
-                    TextField(
+                    TextFormField(
                       controller: _emailController,
                       decoration: InputDecoration(
                         labelText: 'Email',
@@ -116,9 +154,10 @@ class _MensagensScreenState extends State<MensagensScreen> {
                       ),
                       style: const TextStyle(color: Colors.white),
                       keyboardType: TextInputType.emailAddress,
+                      validator: (value) => value?.trim().isEmpty == true ? 'Campo obrigatório' : null,
                     ),
                     const SizedBox(height: 16),
-                    TextField(
+                    TextFormField(
                       controller: _telefoneController,
                       decoration: InputDecoration(
                         labelText: 'Telefone (Opcional)',
@@ -141,10 +180,10 @@ class _MensagensScreenState extends State<MensagensScreen> {
                       keyboardType: TextInputType.phone,
                     ),
                     const SizedBox(height: 16),
-                    TextField(
+                    TextFormField(
                       controller: _textoController,
                       decoration: InputDecoration(
-                        labelText: 'Mensagem',
+                        labelText: 'Texto',
                         labelStyle: const TextStyle(color: Colors.white),
                         counterStyle: const TextStyle(color: Colors.white),
                         border: OutlineInputBorder(
@@ -164,6 +203,7 @@ class _MensagensScreenState extends State<MensagensScreen> {
                       style: const TextStyle(color: Colors.white),
                       maxLines: 5,
                       maxLength: 400,
+                      validator: (value) => value?.trim().isEmpty == true ? 'Campo obrigatório' : null,
                     ),
                     const SizedBox(height: 24),
                     SizedBox(
@@ -174,12 +214,22 @@ class _MensagensScreenState extends State<MensagensScreen> {
                       ),
                     ),
                   ],
+                  ),
                 ),
+              ),
             ),
           ),
         ),
       ),
-    ),
-   );
+    );
+  }
+
+  @override
+  void dispose() {
+    _emissorController.dispose();
+    _emailController.dispose();
+    _telefoneController.dispose();
+    _textoController.dispose();
+    super.dispose();
   }
 }

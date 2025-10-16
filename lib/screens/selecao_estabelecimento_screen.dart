@@ -205,7 +205,7 @@ class _SelecaoEstabelecimentoScreenState extends State<SelecaoEstabelecimentoScr
                                 child: Icon(
                                   estabelecimento.tipo == 'FARMACIA'
                                       ? Icons.local_pharmacy
-                                      : Icons.business,
+                                      : Icons.store,
                                   color: Colors.green,
                                   size: 30,
                                 ),
@@ -241,7 +241,7 @@ class _SelecaoEstabelecimentoScreenState extends State<SelecaoEstabelecimentoScr
                       leading: Icon(
                         estabelecimento.tipo == 'FARMACIA'
                             ? Icons.local_pharmacy
-                            : Icons.business,
+                            : Icons.store,
                         color: Colors.green,
                         size: 32,
                       ),
