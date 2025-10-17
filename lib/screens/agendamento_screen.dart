@@ -25,6 +25,7 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
   String _tipoMedicamento = 'COMPRIMIDO';
   String _tipoColeta = 'RETIRADA';
   Estabelecimento? _estabelecimentoSelecionado;
+  DateTime? _dataRetiradaSelecionada;
 
   @override
   void initState() {
@@ -50,6 +51,10 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
       _showSnackBar('Selecione um local de descarte');
       return;
     }
+    if (_tipoColeta == 'RETIRADA' && _dataRetiradaSelecionada == null) {
+      _showSnackBar('Selecione a data de retirada');
+      return;
+    }
     
     final coleta = Coleta(
       id: 0,
@@ -60,7 +65,9 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
       telefone: _telefoneController.text.trim(),
       tipoMedicamento: _tipoMedicamento,
       tipoColeta: _tipoColeta,
-      dataColeta: DateTime.now().add(const Duration(days: 1)),
+      dataColeta: _tipoColeta == 'RETIRADA' && _dataRetiradaSelecionada != null 
+          ? _dataRetiradaSelecionada! 
+          : DateTime.now().add(const Duration(days: 1)),
       statusColeta: 'ATIVO',
       estabelecimento: _estabelecimentoSelecionado,
     );
@@ -210,9 +217,53 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
                           DropdownMenuItem(value: 'RETIRADA', child: Text('Retirada', style: TextStyle(color: Colors.white))),
                           DropdownMenuItem(value: 'ENTREGA', child: Text('Entrega', style: TextStyle(color: Colors.white))),
                         ],
-                        onChanged: (value) => setState(() => _tipoColeta = value!),
+                        onChanged: (value) {
+                          setState(() {
+                            _tipoColeta = value!;
+                            if (_tipoColeta != 'RETIRADA') {
+                              _dataRetiradaSelecionada = null;
+                            }
+                          });
+                        },
                       ),
                       const SizedBox(height: 16),
+                      if (_tipoColeta == 'RETIRADA')
+                        GestureDetector(
+                          onTap: () async {
+                            final data = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now().add(const Duration(days: 1)),
+                              firstDate: DateTime.now().add(const Duration(days: 1)),
+                              lastDate: DateTime.now().add(const Duration(days: 30)),
+                            );
+                            if (data != null) {
+                              setState(() => _dataRetiradaSelecionada = data);
+                            }
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.white),
+                              borderRadius: BorderRadius.circular(25),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    _dataRetiradaSelecionada != null
+                                        ? 'Data: ${_dataRetiradaSelecionada!.day}/${_dataRetiradaSelecionada!.month}/${_dataRetiradaSelecionada!.year}'
+                                        : 'Selecionar Data de Retirada',
+                                    style: const TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                                const Icon(Icons.calendar_today, color: Colors.white),
+                              ],
+                            ),
+                          ),
+                        ),
+                      if (_tipoColeta == 'RETIRADA')
+                        const SizedBox(height: 16),
                       GestureDetector(
                         onTap: () async {
                           final estabelecimento = await Navigator.push<Estabelecimento>(
