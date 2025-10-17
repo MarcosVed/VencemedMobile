@@ -36,28 +36,46 @@ class AvaliacaoService {
     return null;
   }
 
-  static Future<bool> salvarAvaliacao(int estabelecimentoId, int nota, String? comentario) async {
+  static Future<bool> salvarAvaliacao(int estabelecimentoId, int nota, String? comentario, {int? avaliacaoId}) async {
     try {
       final prefs = await SharedPreferences.getInstance();
       final userId = prefs.getInt('userId');
       
       if (userId == null) return false;
 
-      final uri = Uri.parse('$baseUrl/avaliacoes').replace(
-        queryParameters: {
-          'usuarioId': userId.toString(),
-          'estabelecimentoId': estabelecimentoId.toString(),
-          'nota': nota.toString(),
-          if (comentario != null && comentario.isNotEmpty) 'comentario': comentario,
-        },
-      );
+      if (avaliacaoId != null) {
+        // Atualizar avaliação existente
+        final uri = Uri.parse('$baseUrl/avaliacoes/$avaliacaoId').replace(
+          queryParameters: {
+            'nota': nota.toString(),
+            if (comentario != null && comentario.isNotEmpty) 'comentario': comentario,
+          },
+        );
 
-      final response = await http.post(
-        uri,
-        headers: {'Content-Type': 'application/json'},
-      );
+        final response = await http.put(
+          uri,
+          headers: {'Content-Type': 'application/json'},
+        );
 
-      return response.statusCode == 200;
+        return response.statusCode == 200;
+      } else {
+        // Criar nova avaliação
+        final uri = Uri.parse('$baseUrl/avaliacoes').replace(
+          queryParameters: {
+            'usuarioId': userId.toString(),
+            'estabelecimentoId': estabelecimentoId.toString(),
+            'nota': nota.toString(),
+            if (comentario != null && comentario.isNotEmpty) 'comentario': comentario,
+          },
+        );
+
+        final response = await http.post(
+          uri,
+          headers: {'Content-Type': 'application/json'},
+        );
+
+        return response.statusCode == 200;
+      }
     } catch (e) {
       print('Erro ao salvar avaliação: $e');
       return false;

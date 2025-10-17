@@ -113,6 +113,7 @@ class _DetalhesEstabelecimentoScreenState extends State<DetalhesEstabelecimentoS
       widget.estabelecimento.id,
       _notaSelecionada,
       _comentarioController.text.trim().isEmpty ? null : _comentarioController.text.trim(),
+      avaliacaoId: _minhaAvaliacao?.id,
     );
 
     if (sucesso) {
@@ -315,6 +316,65 @@ class _DetalhesEstabelecimentoScreenState extends State<DetalhesEstabelecimentoS
                       ],
                     ),
                   ),
+                  const SizedBox(height: 24),
+                  if (_avaliacoes.isNotEmpty)
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(25),
+                        color: Colors.white.withOpacity(0.2),
+                        border: Border.all(color: Colors.white),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Avaliações dos Usuários',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          ..._avaliacoes.map((avaliacao) => Container(
+                            margin: const EdgeInsets.only(bottom: 12),
+                            padding: const EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              color: Colors.white.withOpacity(0.1),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Text(
+                                      avaliacao.nomeUsuario,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    _buildStarRating(avaliacao.nota.toDouble(), size: 16),
+                                  ],
+                                ),
+                                if (avaliacao.comentario != null && avaliacao.comentario!.isNotEmpty)
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 8),
+                                    child: Text(
+                                      avaliacao.comentario!,
+                                      style: const TextStyle(color: Colors.white),
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          )).toList(),
+                        ],
+                      ),
+                    ),
                   const SizedBox(height: 24),
                   Container(
                     width: double.infinity,

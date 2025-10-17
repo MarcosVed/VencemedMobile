@@ -1,6 +1,7 @@
 class Avaliacao {
   final int id;
   final int usuarioId;
+  final String nomeUsuario;
   final int estabelecimentoId;
   final int nota;
   final String? comentario;
@@ -9,6 +10,7 @@ class Avaliacao {
   Avaliacao({
     required this.id,
     required this.usuarioId,
+    required this.nomeUsuario,
     required this.estabelecimentoId,
     required this.nota,
     this.comentario,
@@ -19,6 +21,7 @@ class Avaliacao {
     return Avaliacao(
       id: json['id'],
       usuarioId: json['usuario']['id'],
+      nomeUsuario: json['usuario']['nome'],
       estabelecimentoId: json['estabelecimento']['id'],
       nota: json['nota'],
       comentario: json['comentario'],
