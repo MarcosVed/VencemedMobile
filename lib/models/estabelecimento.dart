@@ -11,6 +11,7 @@ class Estabelecimento {
   final String statusEstabelecimento;
   final double? latitude;
   final double? longitude;
+  final String? fotoEst;
 
   Estabelecimento({
     required this.id,
@@ -25,6 +26,7 @@ class Estabelecimento {
     required this.statusEstabelecimento,
     this.latitude,
     this.longitude,
+    this.fotoEst,
   });
 
   factory Estabelecimento.fromJson(Map<String, dynamic> json) {
@@ -39,6 +41,7 @@ class Estabelecimento {
       tipo: json['tipo'],
       coleta: json['coleta'],
       statusEstabelecimento: json['statusEstabelecimento'],
+      fotoEst: json['fotoEst'],
     );
   }
 

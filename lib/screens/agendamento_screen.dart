@@ -6,7 +6,9 @@ import '../services/coleta_service.dart';
 import '../services/coleta_backend_service.dart';
 
 class AgendamentoScreen extends StatefulWidget {
-  const AgendamentoScreen({super.key});
+  final Estabelecimento? estabelecimentoSelecionado;
+  
+  const AgendamentoScreen({super.key, this.estabelecimentoSelecionado});
 
   @override
   State<AgendamentoScreen> createState() => _AgendamentoScreenState();
@@ -23,6 +25,14 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
   String _tipoMedicamento = 'COMPRIMIDO';
   String _tipoColeta = 'RETIRADA';
   Estabelecimento? _estabelecimentoSelecionado;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.estabelecimentoSelecionado != null) {
+      _estabelecimentoSelecionado = widget.estabelecimentoSelecionado;
+    }
+  }
 
   @override
   void dispose() {

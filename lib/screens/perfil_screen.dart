@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vencemed/screens/login_screen.dart';
 import 'lista_mensagens_screen.dart';
 import 'configuracoes_screen.dart';
+import 'favoritos_screen.dart';
 
 class PerfilScreen extends StatefulWidget {
   const PerfilScreen({super.key});
@@ -57,6 +58,27 @@ class _PerfilScreenState extends State<PerfilScreen> {
                         SizedBox(width: 16),
                         Text(
                           'Configurações',
+                          style: TextStyle(color: Colors.white, fontSize: 16),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const FavoritosScreen()),
+                    );
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Row(
+                      children: [
+                        Icon(Icons.favorite, color: Colors.red),
+                        SizedBox(width: 16),
+                        Text(
+                          'Favoritos',
                           style: TextStyle(color: Colors.white, fontSize: 16),
                         ),
                       ],
