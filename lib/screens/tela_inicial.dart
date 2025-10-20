@@ -43,11 +43,17 @@ class _TelaInicialState extends State<TelaInicial> {
   }
 
   Future<List<Coleta>> _getColetas() async {
+    print('Buscando coletas...');
     final coletasBackend = await ColetaBackendService.listarMinhasColetas();
+    print('Coletas do backend: ${coletasBackend.length}');
+    
     if (coletasBackend.isNotEmpty) {
       return coletasBackend;
     }
-    return await ColetaService().getColetas();
+    
+    final coletasLocal = await ColetaService().getColetas();
+    print('Coletas locais: ${coletasLocal.length}');
+    return coletasLocal;
   }
 
   Widget _buildColetasList() {

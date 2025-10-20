@@ -34,7 +34,7 @@ class Coleta {
       id: json['id'],
       info: json['info'],
       cep: json['cep'],
-      endereco: json['endereco'],
+      endereco: json['endereço'] ?? json['endereco'],
       numero: json['numero'],
       complemento: json['complemento'],
       telefone: json['telefone'],
