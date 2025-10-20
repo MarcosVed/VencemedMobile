@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'selecao_estabelecimento_screen.dart';
 import '../models/estabelecimento.dart';
 import '../models/coleta.dart';
 import '../services/coleta_service.dart';
 import '../services/coleta_backend_service.dart';
+import '../services/cep_service.dart';
 
 class _PhoneInputFormatter extends TextInputFormatter {
   @override
@@ -71,6 +70,9 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
   final TextEditingController _infoController = TextEditingController();
   final TextEditingController _cepController = TextEditingController();
   final TextEditingController _enderecoController = TextEditingController();
+  final TextEditingController _bairroController = TextEditingController();
+  final TextEditingController _cidadeController = TextEditingController();
+  final TextEditingController _estadoController = TextEditingController();
   final TextEditingController _numeroController = TextEditingController();
   final TextEditingController _complementoController = TextEditingController();
   final TextEditingController _telefoneController = TextEditingController();
@@ -95,6 +97,9 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
     _infoController.dispose();
     _cepController.dispose();
     _enderecoController.dispose();
+    _bairroController.dispose();
+    _cidadeController.dispose();
+    _estadoController.dispose();
     _numeroController.dispose();
     _complementoController.dispose();
     _telefoneController.dispose();
@@ -108,37 +113,36 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
     setState(() => _isValidatingCep = true);
 
     try {
-      final response = await http.get(
-        Uri.parse('https://viacep.com.br/ws/$cepNumeros/json/'),
-      );
-
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-
-        if (data['erro'] == null) {
-          final endereco = data['logradouro'] ?? '';
-          if (mounted) {
-            setState(() {
-              _enderecoController.text = endereco;
-            });
-          }
-        } else {
-          if (mounted) {
-            _showSnackBar('CEP não encontrado');
-            _enderecoController.text = ''; // mais seguro que clear()
-          }
-        }
+      final data = await CepService.buscarCep(cepNumeros);
+      
+      if (data != null && mounted) {
+        setState(() {
+          _enderecoController.text = data['logradouro'] ?? '';
+          _bairroController.text = data['bairro'] ?? '';
+          _cidadeController.text = data['localidade'] ?? '';
+          _estadoController.text = data['uf'] ?? '';
+        });
+      } else if (mounted) {
+        _showSnackBar('CEP não encontrado');
+        _limparCamposEndereco();
       }
     } catch (e) {
       if (mounted) {
-        _showSnackBar('Erro ao validar CEP');
-        _enderecoController.text = ''; // mais seguro que clear()
+        _showSnackBar('Erro ao buscar CEP');
+        _limparCamposEndereco();
       }
     } finally {
       if (mounted) {
         setState(() => _isValidatingCep = false);
       }
     }
+  }
+
+  void _limparCamposEndereco() {
+    _enderecoController.text = '';
+    _bairroController.text = '';
+    _cidadeController.text = '';
+    _estadoController.text = '';
   }
 
   void _showSnackBar(String mensagem) {
@@ -158,11 +162,26 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
       return;
     }
     
+    final endereco = _enderecoController.text.trim();
+    final bairro = _bairroController.text.trim();
+    final cidade = _cidadeController.text.trim();
+    final estado = _estadoController.text.trim();
+    
+    final enderecoCompleto = [endereco, bairro, cidade, estado]
+        .where((part) => part.isNotEmpty)
+        .join(', ');
+    
+    final enderecoFinal = enderecoCompleto.isEmpty 
+        ? 'Endereço não informado'
+        : (enderecoCompleto.length > 100 
+            ? enderecoCompleto.substring(0, 100)
+            : enderecoCompleto);
+    
     final coleta = Coleta(
       id: 0,
       info: _infoController.text.trim(),
       cep: _cepController.text.trim(),
-      endereco: _enderecoController.text.trim().isEmpty ? '' : _enderecoController.text.trim(),
+      endereco: enderecoFinal,
       numero: _numeroController.text.trim(),
       complemento: _complementoController.text.trim(),
       telefone: _telefoneController.text.trim(),
@@ -278,7 +297,7 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
                           if (cepNumeros.length == 8) {
                             _validarCep(value);
                           } else if (mounted) {
-                            _enderecoController.clear();
+                            _limparCamposEndereco();
                           }
                         },
                         validator: (value) {
@@ -302,6 +321,51 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
                       ),
                       const SizedBox(height: 16),
                       TextFormField(
+                        controller: _bairroController,
+                        enabled: false,
+                        decoration: _buildInputDecoration('Bairro').copyWith(
+                          counterText: '',
+                          hintText: 'Será preenchido automaticamente após inserir o CEP',
+                          hintStyle: const TextStyle(color: Colors.white54),
+                        ),
+                        style: const TextStyle(color: Colors.white),
+                        maxLength: 100,
+                      ),
+                      const SizedBox(height: 16),
+                      Row(
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: TextFormField(
+                              controller: _cidadeController,
+                              enabled: false,
+                              decoration: _buildInputDecoration('Cidade').copyWith(
+                                counterText: '',
+                                hintText: 'Preenchido automaticamente',
+                                hintStyle: const TextStyle(color: Colors.white54),
+                              ),
+                              style: const TextStyle(color: Colors.white),
+                              maxLength: 100,
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: TextFormField(
+                              controller: _estadoController,
+                              enabled: false,
+                              decoration: _buildInputDecoration('Estado').copyWith(
+                                counterText: '',
+                                hintText: 'UF',
+                                hintStyle: const TextStyle(color: Colors.white54),
+                              ),
+                              style: const TextStyle(color: Colors.white),
+                              maxLength: 2,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                      TextFormField(
                         controller: _numeroController,
                         decoration: _buildInputDecoration('Número').copyWith(
                           counterText: '',
@@ -318,7 +382,6 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
                         ),
                         style: const TextStyle(color: Colors.white),
                         maxLength: 40,
-                        validator: (value) => value?.trim().isEmpty == true ? 'Campo obrigatório' : null,
                       ),
                       const SizedBox(height: 16),
                       TextFormField(

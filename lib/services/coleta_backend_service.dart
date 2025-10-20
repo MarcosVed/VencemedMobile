@@ -16,6 +16,7 @@ class ColetaBackendService {
       final coletaData = {
         'info': coleta.info,
         'cep': coleta.cep,
+        'endereço': coleta.endereco,
         'numero': coleta.numero,
         'complemento': coleta.complemento,
         'telefone': coleta.telefone,
@@ -28,11 +29,16 @@ class ColetaBackendService {
             : null,
       };
 
+      print('Payload enviado: ${json.encode(coletaData)}');
+      
       final response = await http.post(
         Uri.parse('$baseUrl/coletas/agendar'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode(coletaData),
       );
+      
+      print('Status da resposta: ${response.statusCode}');
+      print('Corpo da resposta: ${response.body}');
 
       return response.statusCode == 200;
     } catch (e) {
@@ -83,6 +89,7 @@ class ColetaBackendService {
       final coletaData = {
         'info': coleta.info,
         'cep': coleta.cep,
+        'endereço': coleta.endereco,
         'numero': coleta.numero,
         'complemento': coleta.complemento,
         'telefone': coleta.telefone,
