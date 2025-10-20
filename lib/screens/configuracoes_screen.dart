@@ -11,6 +11,7 @@ class ConfiguracoesScreen extends StatefulWidget {
 
 class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> {
   final _nomeController = TextEditingController();
+  final _emailController = TextEditingController();
   final _senhaAtualController = TextEditingController();
   final _novaSenhaController = TextEditingController();
   final _confirmarSenhaController = TextEditingController();
@@ -26,9 +27,15 @@ class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> {
 
   Future<void> loadUserData() async {
     final prefs = await SharedPreferences.getInstance();
+    final nome = prefs.getString('nome') ?? '';
+    final email = prefs.getString('email') ?? '';
+    
+    print('Carregando dados - Nome: $nome, Email: $email');
+    
     setState(() {
-      _nomeController.text = prefs.getString('nome') ?? '';
-      _email = prefs.getString('email') ?? '';
+      _nomeController.text = nome;
+      _emailController.text = email;
+      _email = email;
     });
   }
 
@@ -197,6 +204,7 @@ class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> {
                     ),
                     const SizedBox(height: 16),
                     TextField(
+                      controller: _emailController,
                       enabled: false,
                       decoration: InputDecoration(
                         labelText: 'Email',
@@ -213,11 +221,10 @@ class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> {
                           borderSide: const BorderSide(color: Colors.white),
                         ),
                         prefixIcon: const Icon(Icons.email, color: Colors.white),
-                        hintText: _email,
-                        hintStyle: const TextStyle(color: Colors.white),
                         filled: true,
                         fillColor: Colors.white.withOpacity(0.2),
                       ),
+                      style: const TextStyle(color: Colors.white),
                     ),
                     const SizedBox(height: 16),
                     if (!_editandoSenha)

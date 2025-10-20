@@ -276,17 +276,9 @@ class _SelecaoEstabelecimentoScreenState extends State<SelecaoEstabelecimentoScr
                         color: Colors.green,
                         size: 32,
                       ),
-                      title: Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              estabelecimento.nome,
-                              style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
-                            ),
-                          ),
-                          if (_favoritos.isNotEmpty && _favoritos.contains(estabelecimento.id))
-                            const Icon(Icons.favorite, color: Colors.red, size: 18),
-                        ],
+                      title: Text(
+                        estabelecimento.nome,
+                        style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
                       ),
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -303,6 +295,8 @@ class _SelecaoEstabelecimentoScreenState extends State<SelecaoEstabelecimentoScr
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
+                          if (_favoritos.isNotEmpty && _favoritos.contains(estabelecimento.id))
+                            const Icon(Icons.favorite, color: Colors.white, size: 24),
                           IconButton(
                             icon: const Icon(Icons.info_outline, color: Colors.white),
                             onPressed: () async {

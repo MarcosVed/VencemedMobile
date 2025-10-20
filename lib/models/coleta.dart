@@ -4,6 +4,7 @@ class Coleta {
   final int id;
   final String info;
   final String cep;
+  final String endereco;
   final String numero;
   final String? complemento;
   final String telefone;
@@ -17,6 +18,7 @@ class Coleta {
     required this.id,
     required this.info,
     required this.cep,
+    required this.endereco,
     required this.numero,
     this.complemento,
     required this.telefone,
@@ -32,6 +34,7 @@ class Coleta {
       id: json['id'],
       info: json['info'],
       cep: json['cep'],
+      endereco: json['endereco'],
       numero: json['numero'],
       complemento: json['complemento'],
       telefone: json['telefone'],

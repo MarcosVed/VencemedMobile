@@ -85,7 +85,7 @@ class _FavoritosScreenState extends State<FavoritosScreen> {
                           leading: Icon(
                             estabelecimento.tipo == 'FARMACIA'
                                 ? Icons.local_pharmacy
-                                : Icons.business,
+                                : Icons.store,
                             color: Colors.green,
                             size: 32,
                           ),

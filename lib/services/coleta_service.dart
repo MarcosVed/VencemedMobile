@@ -31,6 +31,7 @@ class ColetaService {
         id: coleta.id,
         info: coleta.info,
         cep: coleta.cep,
+        endereco: coleta.endereco,
         numero: coleta.numero,
         complemento: coleta.complemento,
         telefone: coleta.telefone,

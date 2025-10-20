@@ -20,9 +20,15 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> _saveUserData(Map<String, dynamic> userData) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('email', userData['email']);
-    await prefs.setString('nome', userData['nome']);
-    await prefs.setInt('userId', userData['id']);
+    
+    print('Dados recebidos: $userData');
+    
+    await prefs.setString('email', userData['email'] ?? '');
+    await prefs.setString('nome', userData['nome'] ?? '');
+    await prefs.setInt('userId', userData['id'] ?? 0);
+    
+    print('Email salvo: ${userData['email']}');
+    print('Nome salvo: ${userData['nome']}');
   }
 
   Future<void> _login() async {
@@ -41,7 +47,16 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() => _isLoading = false);
     if (response.statusCode == 200) {
       final responseData = jsonDecode(response.body);
-      final userData = responseData is List ? responseData.first : responseData;
+      
+      // Extrair dados do Optional<Usuario>
+      Map<String, dynamic> userData;
+      if (responseData is List && responseData.isNotEmpty) {
+        userData = responseData.first;
+      } else if (responseData is Map<String, dynamic>) {
+        userData = responseData;
+      } else {
+        throw Exception('Formato de resposta inválido');
+      }
       
       await _saveUserData(userData);
 
