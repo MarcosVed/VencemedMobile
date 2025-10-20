@@ -5,6 +5,7 @@ import '../models/estabelecimento.dart';
 import 'detalhes_estabelecimento_screen.dart';
 import '../services/cep_service.dart';
 import '../services/estabelecimento_service.dart';
+import '../services/favorito_service.dart';
 
 class SelecaoEstabelecimentoScreen extends StatefulWidget {
   const SelecaoEstabelecimentoScreen({super.key});
@@ -19,6 +20,7 @@ class _SelecaoEstabelecimentoScreenState extends State<SelecaoEstabelecimentoScr
   LatLng _currentLocation = const LatLng(-23.5124538,-46.8898006);
   List<Estabelecimento> _estabelecimentosProximos = [];
   bool _isLoading = false;
+  Set<int> _favoritos = {};
 
 
 
@@ -27,13 +29,42 @@ class _SelecaoEstabelecimentoScreenState extends State<SelecaoEstabelecimentoScr
     super.initState();
     _estabelecimentosProximos = [];
     _carregarEstabelecimentos();
+    _carregarFavoritos();
   }
 
   Future<void> _carregarEstabelecimentos() async {
-    final estabelecimentos = await EstabelecimentoService.listarTodos();
-    setState(() {
-      _estabelecimentosProximos = estabelecimentos;
-    });
+    try {
+      final estabelecimentos = await EstabelecimentoService.listarTodos();
+      if (mounted) {
+        setState(() {
+          _estabelecimentosProximos = estabelecimentos;
+        });
+      }
+    } catch (e) {
+      // Silenciar erros para evitar loops
+    }
+  }
+
+  Future<void> _carregarFavoritos() async {
+    try {
+      final estabelecimentos = await EstabelecimentoService.listarTodos();
+      final favoritosSet = <int>{};
+      
+      for (final estabelecimento in estabelecimentos) {
+        final isFavorito = await FavoritoService.isFavorito(estabelecimento.id);
+        if (isFavorito) {
+          favoritosSet.add(estabelecimento.id);
+        }
+      }
+      
+      if (mounted) {
+        setState(() {
+          _favoritos = favoritosSet;
+        });
+      }
+    } catch (e) {
+      // Silenciar erros para evitar loops
+    }
   }
 
   Future<void> _buscarPorCep() async {
@@ -245,9 +276,17 @@ class _SelecaoEstabelecimentoScreenState extends State<SelecaoEstabelecimentoScr
                         color: Colors.green,
                         size: 32,
                       ),
-                      title: Text(
-                        estabelecimento.nome,
-                        style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+                      title: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              estabelecimento.nome,
+                              style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+                            ),
+                          ),
+                          if (_favoritos.isNotEmpty && _favoritos.contains(estabelecimento.id))
+                            const Icon(Icons.favorite, color: Colors.red, size: 18),
+                        ],
                       ),
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

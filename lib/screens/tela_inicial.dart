@@ -91,7 +91,7 @@ class _TelaInicialState extends State<TelaInicial> {
         statusColor = Colors.green;
         statusIcon = Icons.schedule;
         break;
-      case 'COLETADO':
+      case 'CONCLUIDO':
         statusColor = Colors.blue;
         statusIcon = Icons.check_circle;
         break;
@@ -101,7 +101,7 @@ class _TelaInicialState extends State<TelaInicial> {
         break;
       default:
         statusColor = Colors.grey;
-        statusIcon = Icons.help;
+        statusIcon = Icons.cancel;
     }
 
     return Card(
@@ -153,11 +153,13 @@ class _TelaInicialState extends State<TelaInicial> {
                         ],
                       ),
                     ),
-                    if (coleta.statusColeta == 'ATIVO')
-                      IconButton(
-                        icon: const Icon(Icons.delete, color: Colors.red),
-                        onPressed: () => _cancelarColeta(coleta),
+                    IconButton(
+                      icon: Icon(
+                        coleta.statusColeta == 'CONCLUIDO' ? Icons.check_circle : Icons.delete,
+                        color: coleta.statusColeta == 'CONCLUIDO' ? Colors.green : Colors.red,
                       ),
+                      onPressed: () => _cancelarColeta(coleta),
+                    ),
                   ],
                 ),
               ],
@@ -221,34 +223,53 @@ class _TelaInicialState extends State<TelaInicial> {
   }
 
   Future<void> _cancelarColeta(Coleta coleta) async {
-    final confirmar = await showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Cancelar Coleta'),
-        content: const Text('Tem certeza que deseja cancelar esta coleta?'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context, false),
-            child: const Text('Não'),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pop(context, true),
-            child: const Text('Sim'),
-          ),
-        ],
-      ),
-    );
+    bool confirmar = true;
+    
+    if (coleta.statusColeta == 'INATIVO') {
+      // Para coletas canceladas, deletar diretamente sem confirmação
+      confirmar = true;
+    } else {
+      // Para outras coletas, mostrar dialog de confirmação
+      String titulo;
+      String mensagem;
+      
+      if (coleta.statusColeta == 'CONCLUIDO') {
+        titulo = 'Remover Coleta';
+        mensagem = 'A coleta foi concluída?';
+      } else {
+        titulo = 'Cancelar Coleta';
+        mensagem = 'Tem certeza que deseja cancelar a coleta?';
+      }
+      
+      confirmar = await showDialog<bool>(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(titulo),
+          content: Text(mensagem),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context, false),
+              child: const Text('Não'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pop(context, true),
+              child: const Text('Sim'),
+            ),
+          ],
+        ),
+      ) ?? false;
+    }
 
-    if (confirmar == true) {
+    if (confirmar) {
       final sucesso = await ColetaBackendService.deletarColeta(coleta.id);
       if (sucesso) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Coleta cancelada com sucesso!')),
+          const SnackBar(content: Text('Coleta removida com sucesso!')),
         );
         setState(() {});
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Erro ao cancelar coleta')),
+          const SnackBar(content: Text('Erro ao remover coleta')),
         );
       }
     }
