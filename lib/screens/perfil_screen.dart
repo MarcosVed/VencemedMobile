@@ -66,11 +66,15 @@ class _PerfilScreenState extends State<PerfilScreen> {
                   ),
                 ),
                 InkWell(
-                  onTap: () {
-                    Navigator.push(
+                  onTap: () async {
+                    final result = await Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => const FavoritosScreen()),
                     );
+                    
+                    if (result == 'reload') {
+                      Navigator.pop(context, 'reload');
+                    }
                   },
                   child: const Padding(
                     padding: EdgeInsets.all(16.0),

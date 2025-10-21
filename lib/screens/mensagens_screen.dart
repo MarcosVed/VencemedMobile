@@ -1,7 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/mensagem.dart';
 import '../services/mensagem_service.dart';
+
+class _PhoneInputFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
+    final text = newValue.text.replaceAll(RegExp(r'[^0-9]'), '');
+    
+    if (text.length <= 2) {
+      return newValue.copyWith(text: text);
+    } else if (text.length <= 7) {
+      return newValue.copyWith(
+        text: '(${text.substring(0, 2)}) ${text.substring(2)}',
+        selection: TextSelection.collapsed(offset: text.length + 4),
+      );
+    } else if (text.length <= 11) {
+      return newValue.copyWith(
+        text: '(${text.substring(0, 2)}) ${text.substring(2, 7)}-${text.substring(7)}',
+        selection: TextSelection.collapsed(offset: text.length + 6),
+      );
+    }
+    
+    return oldValue;
+  }
+}
 
 class MensagensScreen extends StatefulWidget {
   const MensagensScreen({super.key});
@@ -178,6 +205,11 @@ class _MensagensScreenState extends State<MensagensScreen> {
                       ),
                       style: const TextStyle(color: Colors.white),
                       keyboardType: TextInputType.phone,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                        LengthLimitingTextInputFormatter(11),
+                        _PhoneInputFormatter(),
+                      ],
                     ),
                     const SizedBox(height: 16),
                     TextFormField(

@@ -115,8 +115,8 @@ class _FavoritosScreenState extends State<FavoritosScreen> {
                             ],
                           ),
                           trailing: const Icon(Icons.arrow_forward_ios, color: Colors.white),
-                          onTap: () {
-                            Navigator.push(
+                          onTap: () async {
+                            final result = await Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => AgendamentoScreen(
@@ -124,6 +124,10 @@ class _FavoritosScreenState extends State<FavoritosScreen> {
                                 ),
                               ),
                             );
+                            
+                            if (result == true) {
+                              Navigator.pop(context, 'reload');
+                            }
                           },
                         ),
                       );

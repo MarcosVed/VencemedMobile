@@ -297,12 +297,16 @@ class _TelaInicialState extends State<TelaInicial> {
         foregroundColor: Colors.white,
         automaticallyImplyLeading: false,
         leading: IconButton(
-          onPressed: () {
-            showDialog(
+          onPressed: () async {
+            final result = await showDialog(
               context: context,
               barrierColor: Colors.transparent,
               builder: (context) => const PerfilScreen(),
             );
+            
+            if (result == 'reload') {
+              setState(() {});
+            }
           },
           icon: const Icon(Icons.person),
         ),

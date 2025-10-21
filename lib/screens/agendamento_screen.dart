@@ -203,7 +203,7 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
       _showSnackBar('Erro ao agendar coleta. Tente novamente.');
     }
     
-    Navigator.pop(context);
+    Navigator.pop(context, true);
   }
 
   InputDecoration _buildInputDecoration(String label) {
