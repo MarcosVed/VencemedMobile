@@ -4,6 +4,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class UsuarioService {
   static const String baseUrl = 'http://localhost:8080';
+  static const String baseUrlEmulator = 'http://10.0.2.2:8080';
+  static String get apiUrl => baseUrl; // Use baseUrlEmulator para emulador Android
 
   static Future<bool> alterarSenha(String novaSenha) async {
     try {
@@ -12,7 +14,7 @@ class UsuarioService {
       
       if (userId == null) return false;
 
-      final uri = Uri.parse('$baseUrl/usuario/alterarSenha/$userId').replace(
+      final uri = Uri.parse('$apiUrl/usuario/alterarSenha/$userId').replace(
         queryParameters: {'novaSenha': novaSenha},
       );
 
@@ -35,7 +37,7 @@ class UsuarioService {
       
       if (userId == null) return false;
 
-      final uri = Uri.parse('$baseUrl/usuario/alterarNome/$userId').replace(
+      final uri = Uri.parse('$apiUrl/usuario/alterarNome/$userId').replace(
         queryParameters: {'novoNome': novoNome},
       );
 

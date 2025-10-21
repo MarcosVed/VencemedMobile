@@ -4,12 +4,14 @@ import '../models/estabelecimento.dart';
 import 'cep_service.dart';
 
 class EstabelecimentoService {
-  static const String baseUrl = 'http://localhost:8080'; // Para web browser
+  static const String baseUrl = 'http://localhost:8080';
+  static const String baseUrlEmulator = 'http://10.0.2.2:8080';
+  static String get apiUrl => baseUrl; // Use baseUrlEmulator para emulador Android
 
   static Future<List<Estabelecimento>> buscarPorCep(String cep) async {
     try {
       final response = await http.get(
-        Uri.parse('$baseUrl/estabelecimento/buscarPorCep/$cep'),
+        Uri.parse('$apiUrl/estabelecimento/buscarPorCep/$cep'),
         headers: {'Content-Type': 'application/json'},
       );
 
@@ -31,7 +33,7 @@ class EstabelecimentoService {
   static Future<List<Estabelecimento>> listarTodos() async {
     try {
       final response = await http.get(
-        Uri.parse('$baseUrl/estabelecimento/publico'),
+        Uri.parse('$apiUrl/estabelecimento/publico'),
         headers: {'Content-Type': 'application/json'},
       );
 

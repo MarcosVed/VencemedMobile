@@ -166,15 +166,22 @@ class _SelecaoEstabelecimentoScreenState extends State<SelecaoEstabelecimentoScr
                       controller: _cepController,
                       keyboardType: TextInputType.number,
                       maxLength: 9,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         labelText: 'Digite seu CEP',
-                        labelStyle: TextStyle(color: Colors.white),
+                        labelStyle: const TextStyle(color: Colors.white),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(25),
+                        ),
                         enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(25),
+                          borderSide: const BorderSide(color: Colors.white),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(25),
+                          borderSide: const BorderSide(color: Colors.white),
                         ),
+                        filled: true,
+                        fillColor: Colors.white.withOpacity(0.2),
                         counterText: '',
                       ),
                       style: const TextStyle(color: Colors.white),

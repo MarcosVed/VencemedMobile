@@ -15,9 +15,12 @@ class CadastroScreen extends StatefulWidget {
 }
 
 class _CadastroScreenState extends State<CadastroScreen> {
+  static const String baseUrl = 'http://localhost:8080';
+  static const String baseUrlEmulator = 'http://10.0.2.2:8080';
+  static String get apiUrl => baseUrl; // Use baseUrlEmulator para emulador Android
+  
   final _nomeController = TextEditingController();
   final _emailController = TextEditingController();
-
   final _senhaController = TextEditingController();
   bool _obscurePassword = true;
   bool _isLoading = false;
@@ -47,8 +50,7 @@ class _CadastroScreenState extends State<CadastroScreen> {
 
     setState(() => _isLoading = true);
 
-    final url = Uri.parse('http://localhost:8080/usuario/salvar');
- // use 10.0.2.2 para emulador Android
+    final url = Uri.parse('$apiUrl/usuario/salvar');
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},

@@ -5,6 +5,9 @@ import '../models/coleta.dart';
 
 class ColetaBackendService {
   static const String baseUrl = 'http://localhost:8080';
+  static const String baseUrlEmulator = 'http://10.0.2.2:8080';
+  
+  static String get apiUrl => baseUrl; // Use baseUrlEmulator para emulador Android
 
   static Future<bool> agendarColeta(Coleta coleta) async {
     try {
@@ -32,7 +35,7 @@ class ColetaBackendService {
       print('Payload enviado: ${json.encode(coletaData)}');
       
       final response = await http.post(
-        Uri.parse('$baseUrl/coletas/agendar'),
+        Uri.parse('$apiUrl/coletas/agendar'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode(coletaData),
       );
@@ -60,7 +63,7 @@ class ColetaBackendService {
       print('Buscando coletas para usuário ID: $userId');
       
       final response = await http.get(
-        Uri.parse('$baseUrl/coletas/minhas?usuarioId=$userId'),
+        Uri.parse('$apiUrl/coletas/minhas?usuarioId=$userId'),
         headers: {'Content-Type': 'application/json'},
       );
 
@@ -104,7 +107,7 @@ class ColetaBackendService {
       };
 
       final response = await http.put(
-        Uri.parse('$baseUrl/coletas/$id'),
+        Uri.parse('$apiUrl/coletas/$id'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode(coletaData),
       );
@@ -119,7 +122,7 @@ class ColetaBackendService {
   static Future<bool> deletarColeta(int id) async {
     try {
       final response = await http.delete(
-        Uri.parse('$baseUrl/coletas/$id'),
+        Uri.parse('$apiUrl/coletas/$id'),
         headers: {'Content-Type': 'application/json'},
       );
 

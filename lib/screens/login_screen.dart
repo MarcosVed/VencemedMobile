@@ -13,6 +13,10 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  static const String baseUrl = 'http://localhost:8080';
+  static const String baseUrlEmulator = 'http://10.0.2.2:8080';
+  static String get apiUrl => baseUrl; // Use baseUrlEmulator para emulador Android
+  
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _obscurePassword = true;
@@ -34,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> _login() async {
     setState(() => _isLoading = true);
 
-    final url = Uri.parse('http://localhost:8080/usuario/login');
+    final url = Uri.parse('$apiUrl/usuario/login');
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},

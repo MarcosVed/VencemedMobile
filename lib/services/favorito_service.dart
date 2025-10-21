@@ -5,6 +5,8 @@ import '../models/favorito.dart';
 
 class FavoritoService {
   static const String baseUrl = 'http://localhost:8080';
+  static const String baseUrlEmulator = 'http://10.0.2.2:8080';
+  static String get apiUrl => baseUrl; // Use baseUrlEmulator para emulador Android
 
   static Future<bool> adicionarFavorito(int estabelecimentoId) async {
     try {
@@ -13,7 +15,7 @@ class FavoritoService {
       
       if (userId == null) return false;
 
-      final uri = Uri.parse('$baseUrl/favoritos').replace(
+      final uri = Uri.parse('$apiUrl/favoritos').replace(
         queryParameters: {
           'usuarioId': userId.toString(),
           'estabelecimentoId': estabelecimentoId.toString(),
@@ -40,7 +42,7 @@ class FavoritoService {
       if (userId == null) return [];
 
       final response = await http.get(
-        Uri.parse('$baseUrl/favoritos/usuario/$userId'),
+        Uri.parse('$apiUrl/favoritos/usuario/$userId'),
         headers: {'Content-Type': 'application/json'},
       );
 
@@ -66,7 +68,7 @@ class FavoritoService {
       
       if (userId == null) return false;
 
-      final uri = Uri.parse('$baseUrl/favoritos').replace(
+      final uri = Uri.parse('$apiUrl/favoritos').replace(
         queryParameters: {
           'usuarioId': userId.toString(),
           'estabelecimentoId': estabelecimentoId.toString(),
