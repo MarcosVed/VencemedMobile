@@ -35,13 +35,17 @@ class _SelecaoEstabelecimentoScreenState extends State<SelecaoEstabelecimentoScr
   Future<void> _carregarEstabelecimentos() async {
     try {
       final estabelecimentos = await EstabelecimentoService.listarTodos();
+      print('Estabelecimentos carregados: ${estabelecimentos.length}');
+      for (final est in estabelecimentos) {
+        print('${est.nome}: lat=${est.latitude}, lng=${est.longitude}');
+      }
       if (mounted) {
         setState(() {
           _estabelecimentosProximos = estabelecimentos;
         });
       }
     } catch (e) {
-      // Silenciar erros para evitar loops
+      print('Erro ao carregar estabelecimentos: $e');
     }
   }
 
@@ -234,21 +238,25 @@ class _SelecaoEstabelecimentoScreenState extends State<SelecaoEstabelecimentoScr
                           ),
                         ),
                         // Marcadores dos estabelecimentos
-                        ..._estabelecimentosProximos
-                            .where((e) => e.latitude != null && e.longitude != null)
-                            .map((estabelecimento) => Marker(
-                              point: LatLng(estabelecimento.latitude!, estabelecimento.longitude!),
-                              child: GestureDetector(
-                                onTap: () => Navigator.pop(context, estabelecimento),
-                                child: Icon(
-                                  estabelecimento.tipo == 'FARMACIA'
-                                      ? Icons.local_pharmacy
-                                      : Icons.store,
-                                  color: Colors.green,
-                                  size: 30,
-                                ),
+                        ...() {
+                          final estabelecimentosComCoordenadas = _estabelecimentosProximos
+                              .where((e) => e.latitude != null && e.longitude != null)
+                              .toList();
+                          print('Estabelecimentos com coordenadas: ${estabelecimentosComCoordenadas.length}');
+                          return estabelecimentosComCoordenadas.map((estabelecimento) => Marker(
+                            point: LatLng(estabelecimento.latitude!, estabelecimento.longitude!),
+                            child: GestureDetector(
+                              onTap: () => Navigator.pop(context, estabelecimento),
+                              child: Icon(
+                                estabelecimento.tipo == 'FARMACIA'
+                                    ? Icons.local_pharmacy
+                                    : Icons.store,
+                                color: Colors.green,
+                                size: 30,
                               ),
-                            )).toList(),
+                            ),
+                          ));
+                        }().toList(),
                       ],
                     ),
                   ],

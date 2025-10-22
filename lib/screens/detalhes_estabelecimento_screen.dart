@@ -3,7 +3,7 @@ import '../models/estabelecimento.dart';
 import '../models/avaliacao.dart';
 import '../services/avaliacao_service.dart';
 import '../services/favorito_service.dart';
-import '../utils/image_utils.dart';
+import '../widgets/estabelecimento_image.dart';
 
 class DetalhesEstabelecimentoScreen extends StatefulWidget {
   final Estabelecimento estabelecimento;
@@ -276,21 +276,11 @@ class _DetalhesEstabelecimentoScreenState extends State<DetalhesEstabelecimentoS
                           ),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(12),
-                            child: ImageUtils.buildImageFromBase64(
-                              widget.estabelecimento.fotoEst,
+                            child: EstabelecimentoImage(
+                              estabelecimentoId: widget.estabelecimento.id,
                               width: double.infinity,
                               height: 200,
                               fit: BoxFit.cover,
-                              errorWidget: Container(
-                                color: Colors.white.withOpacity(0.1),
-                                child: const Center(
-                                  child: Icon(
-                                    Icons.store,
-                                    color: Colors.white,
-                                    size: 50,
-                                  ),
-                                ),
-                              ),
                             ),
                           ),
                         ),

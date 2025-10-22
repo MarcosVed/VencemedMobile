@@ -5,8 +5,11 @@ import 'package:http/http.dart' as http;
 class CepService {
   static Future<Map<String, dynamic>?> buscarCep(String cep) async {
     try {
+      // Limpar CEP removendo espaços e caracteres especiais
+      final cepLimpo = cep.replaceAll(RegExp(r'[^0-9]'), '');
+      
       final response = await http.get(
-        Uri.parse('https://viacep.com.br/ws/$cep/json/'),
+        Uri.parse('https://viacep.com.br/ws/$cepLimpo/json/'),
       );
       
       if (response.statusCode == 200) {
