@@ -3,6 +3,7 @@ import '../models/estabelecimento.dart';
 import '../models/avaliacao.dart';
 import '../services/avaliacao_service.dart';
 import '../services/favorito_service.dart';
+import '../utils/image_utils.dart';
 
 class DetalhesEstabelecimentoScreen extends StatefulWidget {
   final Estabelecimento estabelecimento;
@@ -265,35 +266,34 @@ class _DetalhesEstabelecimentoScreenState extends State<DetalhesEstabelecimentoS
                           ],
                         ),
                         const SizedBox(height: 16),
-                        if (widget.estabelecimento.fotoEst != null)
-                          Container(
-                            width: double.infinity,
-                            height: 200,
-                            margin: const EdgeInsets.only(bottom: 16),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(color: Colors.white),
-                            ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(12),
-                              child: Image.memory(
-                                Uri.parse(widget.estabelecimento.fotoEst!).data!.contentAsBytes(),
-                                fit: BoxFit.cover,
-                                errorBuilder: (context, error, stackTrace) {
-                                  return Container(
-                                    color: Colors.white.withOpacity(0.1),
-                                    child: const Center(
-                                      child: Icon(
-                                        Icons.image_not_supported,
-                                        color: Colors.white,
-                                        size: 50,
-                                      ),
-                                    ),
-                                  );
-                                },
+                        Container(
+                          width: double.infinity,
+                          height: 200,
+                          margin: const EdgeInsets.only(bottom: 16),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(color: Colors.white),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: ImageUtils.buildImageFromBase64(
+                              widget.estabelecimento.fotoEst,
+                              width: double.infinity,
+                              height: 200,
+                              fit: BoxFit.cover,
+                              errorWidget: Container(
+                                color: Colors.white.withOpacity(0.1),
+                                child: const Center(
+                                  child: Icon(
+                                    Icons.store,
+                                    color: Colors.white,
+                                    size: 50,
+                                  ),
+                                ),
                               ),
                             ),
                           ),
+                        ),
                         _buildInfoRow('Informações', widget.estabelecimento.info),
                         _buildInfoRow('CEP', widget.estabelecimento.cep),
                         _buildInfoRow('Número', widget.estabelecimento.numero),

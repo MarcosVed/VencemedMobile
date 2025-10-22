@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 import 'package:http/http.dart' as http;
 import '../models/estabelecimento.dart';
 import 'cep_service.dart';
@@ -76,5 +77,20 @@ class EstabelecimentoService {
       }
     }
     return estabelecimentos;
+  }
+
+  static Future<Uint8List?> buscarImagemEstabelecimento(int id) async {
+    try {
+      final response = await http.get(
+        Uri.parse('$apiUrl/estabelecimento/imagem/$id'),
+      );
+
+      if (response.statusCode == 200) {
+        return response.bodyBytes;
+      }
+    } catch (e) {
+      print('Erro ao buscar imagem: $e');
+    }
+    return null;
   }
 }
