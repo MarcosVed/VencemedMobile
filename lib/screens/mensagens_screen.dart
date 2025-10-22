@@ -119,8 +119,26 @@ class _MensagensScreenState extends State<MensagensScreen> {
               ),
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.2),
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.indigo.shade900.withOpacity(0.5),
+                    const Color(0xFF000080).withOpacity(0.3),
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
                 borderRadius: BorderRadius.circular(25),
+                border: Border.all(
+                  color: Colors.indigo.shade800.withOpacity(0.5),
+                  width: 1,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    blurRadius: 20,
+                    offset: const Offset(0, 8),
+                  ),
+                ],
               ),
               child: Form(
                 key: _formKey,

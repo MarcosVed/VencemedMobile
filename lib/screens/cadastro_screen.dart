@@ -76,7 +76,13 @@ class _CadastroScreenState extends State<CadastroScreen> {
       
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const TelaInicial()),
+        PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => const TelaInicial(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return FadeTransition(opacity: animation, child: child);
+          },
+          transitionDuration: const Duration(milliseconds: 800),
+        ),
       );
     } else if (response.statusCode == 409) {
       _showError('Email já cadastrado.');

@@ -66,7 +66,13 @@ class _LoginScreenState extends State<LoginScreen> {
 
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const TelaInicial()),
+        PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => const TelaInicial(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return FadeTransition(opacity: animation, child: child);
+          },
+          transitionDuration: const Duration(milliseconds: 800),
+        ),
       );
     } else {
       showDialog(

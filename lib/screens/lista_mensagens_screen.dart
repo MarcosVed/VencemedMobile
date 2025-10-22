@@ -96,12 +96,32 @@ class _ListaMensagensScreenState extends State<ListaMensagensScreen> {
                     itemCount: mensagens.length,
                     itemBuilder: (context, index) {
                       final mensagem = mensagens[index];
-                      return Card(
+                      return Container(
                         margin: const EdgeInsets.only(bottom: 12),
-                        color: Colors.transparent,
-                        child: Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: Column(
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              Colors.indigo.shade900.withOpacity(0.5),
+                              const Color(0xFF000080).withOpacity(0.3),
+                            ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color: Colors.indigo.shade800.withOpacity(0.5),
+                            width: 1,
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.1),
+                              blurRadius: 20,
+                              offset: const Offset(0, 8),
+                            ),
+                          ],
+                        ),
+                        child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
@@ -164,7 +184,6 @@ class _ListaMensagensScreenState extends State<ListaMensagensScreen> {
                                 style: const TextStyle(color: Colors.white70, fontSize: 12),
                               ),
                             ],
-                          ),
                         ),
                       );
                     },
