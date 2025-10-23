@@ -33,22 +33,26 @@ class EstabelecimentoService {
 
   static Future<List<Estabelecimento>> listarTodos() async {
     try {
+      print('Buscando em: $apiUrl/estabelecimento/publico');
       final response = await http.get(
         Uri.parse('$apiUrl/estabelecimento/publico'),
         headers: {'Content-Type': 'application/json'},
       );
 
+      print('Status: ${response.statusCode}');
+      print('Resposta: ${response.body}');
+
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
         List<Estabelecimento> estabelecimentos = data
             .map((json) => Estabelecimento.fromJson(json))
-            .where((e) => e.statusEstabelecimento == 'ATIVO')
             .toList();
         
+        print('Total encontrado: ${estabelecimentos.length}');
         return await _adicionarCoordenadas(estabelecimentos);
       }
     } catch (e) {
-      print('Erro ao conectar ao backend: $e');
+      print('Erro: $e');
     }
     return [];
   }
